@@ -1,0 +1,22 @@
+/* Add global app styles here */
+@import "./fonts";
+
+:root {
+  --f7-theme-color: #ffffff;
+  --f7-theme-color-rgb: 255, 255, 255;
+  --f7-theme-color-shade: #ebebeb;
+  --f7-theme-color-tint: #ffffff;
+}
+
+body,
+:root,
+:root.theme-dark,
+:root .theme-dark {
+  --f7-bars-text-color: #000000 !important;
+  --f7-navbar-link-color: #000000;
+  --f7-navbar-title-margin-left: 0;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
