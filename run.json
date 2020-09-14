@@ -1,0 +1,9 @@
+{
+  "apps": [
+      {
+          "name": "golha pwa",
+          "script": "yarn",
+          "args" : "start"
+      }
+  ]
+}
