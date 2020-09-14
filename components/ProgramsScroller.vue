@@ -4,7 +4,7 @@
     <div class="scroll">
       <ul class="programs">
         <li v-for="p in programs" :key="p.name">
-          <f7-link href="/about" class="program-box">
+          <f7-link :href="`/program/${p.name}`" class="program-box">
             <div class="program-box-overlay"></div>
             <h4>{{ p.title }}</h4>
             <div class="program-info">تعداد برنامه: {{ p.count }}</div>
@@ -22,7 +22,7 @@
     margin-bottom: 0;
     font-family: IranSansWeb;
     font-weight: 400;
-    font-size: 1rem ;
+    font-size: 1rem;
   }
   .scroll {
     overflow-x: auto;
