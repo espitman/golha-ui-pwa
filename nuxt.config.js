@@ -1,5 +1,6 @@
 module.exports = {
-  mode: "spa",
+
+  ssr: false,
   // Nuxt modules
   modules: ["nuxt7", "@nuxtjs/pwa", "@nuxtjs/axios"],
 

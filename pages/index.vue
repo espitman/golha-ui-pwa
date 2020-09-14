@@ -1,10 +1,22 @@
 <template>
   <f7-page>
-    <Navbar />
+    <f7-navbar>
+      <Navbar />
+    </f7-navbar>
     <ProgramsScroller :programs="programs" />
     <SingersScroller :singers="singers" />
 
     <f7-list class="searchbar-hide-on-search">
+      <f7-list-item title="About Nuxt7" link="/about/"></f7-list-item>
+      <f7-list-item title="Test 1" link="/test/"></f7-list-item>
+      <f7-list-item title="Tabs" link="/tabs/"></f7-list-item>
+      <f7-list-item title="Action Sheet" link="/action-sheet/"></f7-list-item>
+      <f7-list-item title="Scroller" link="/scroller/"></f7-list-item>
+      <f7-list-item title="About Nuxt7" link="/about/"></f7-list-item>
+      <f7-list-item title="Test 1" link="/test/"></f7-list-item>
+      <f7-list-item title="Tabs" link="/tabs/"></f7-list-item>
+      <f7-list-item title="Action Sheet" link="/action-sheet/"></f7-list-item>
+      <f7-list-item title="Scroller" link="/scroller/"></f7-list-item>
       <f7-list-item title="About Nuxt7" link="/about/"></f7-list-item>
       <f7-list-item title="Test 1" link="/test/"></f7-list-item>
       <f7-list-item title="Tabs" link="/tabs/"></f7-list-item>
