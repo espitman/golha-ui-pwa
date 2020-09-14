@@ -7,7 +7,7 @@ module.exports = {
   // PWA manifest
   // https://github.com/nuxt-community/pwa-module
   manifest: {
-    name: "my-nuxt7",
+    name: "رادیو گل‌ها",
     description: ""
   },
 
@@ -16,7 +16,7 @@ module.exports = {
     htmlAttrs: {
       dir: "rtl"
     },
-    title: "Nuxt PWA"
+    title: "رادیو گل‌ها"
   },
 
   // Framework7 Config
