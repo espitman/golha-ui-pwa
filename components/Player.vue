@@ -1,5 +1,9 @@
 <template>
-  <div class="player" v-bind:class="{ show: isShow }">
+  <div
+    class="player"
+    v-bind:class="{ show: isShow, full: isFull }"
+    v-hammer:swipe="onSwipe"
+  >
     <audio v-if="Object.keys(track).length" id="player">
       <source
         :src="`https://files.radio-golha.com/golha/music/${track.file}`"
@@ -68,11 +72,15 @@
   z-index: 5000;
   display: none;
   opacity: 0;
+  transition: height 0.3s ease-out;
   &.show {
     opacity: 1;
     display: flex;
     -webkit-animation: slide-top 0.3s both;
     animation: slide-top 0.3s both;
+  }
+  &.full {
+    height: 100%;
   }
   .range {
     width: 100%;
@@ -173,6 +181,7 @@ export default {
       track: {},
       audio: {},
       isShow: false,
+      isFull: false,
       playing: false,
       isLoad: false,
       currentTime: 0
@@ -219,6 +228,14 @@ export default {
     },
     fastForward() {
       this.player.currentTime += 10;
+    },
+    onSwipe(e) {
+      if (e.direction === 8) {
+        this.isFull = true;
+      }
+      if (e.direction === 16) {
+        this.isFull = false;
+      }
     }
   }
 };

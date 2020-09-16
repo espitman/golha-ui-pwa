@@ -1,5 +1,4 @@
 module.exports = {
-
   ssr: false,
   // Nuxt modules
   modules: ["nuxt7", "@nuxtjs/pwa", "@nuxtjs/axios"],
@@ -36,6 +35,7 @@ module.exports = {
   },
   components: true,
 
+  plugins: [{ src: "~/plugins/vue2-hammer", ssr: false }],
   // Additional CSS configuration
   css: ["assets/app.scss"]
 };
