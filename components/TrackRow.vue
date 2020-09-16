@@ -1,18 +1,18 @@
 <template>
-  <f7-link :href="`/track/${track._id}`" class="trackRow">
+  <div class="trackRow" v-on:click="playTrack(track)">
     <div class="inner">
       <img
         class="img"
         :src="`https://files.radio-golha.com${track.singer[0].image}`"
       />
       <div>
-        <h4>{{ track.title }}</h4>
+        <h4>{{ track.title }}</h4>       
         <div class="singers">
           <h6 v-for="s in track.singer" :key="s._id">{{ s.name }}</h6>
         </div>
       </div>
     </div>
-  </f7-link>
+  </div>
 </template>
 
 <style lang="scss">
@@ -72,6 +72,11 @@ export default {
   props: ["track"],
   data() {
     return { loading: true, tracks: [] };
+  },
+  methods: {
+    playTrack(track) {
+      this.$nuxt.$emit("track::pkay", track );
+    }
   }
 };
 </script>

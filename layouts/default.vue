@@ -8,6 +8,7 @@
       </f7-view>
     </f7-panel>
     <nuxt />
+    <Player />
   </div>
 </template>
 
