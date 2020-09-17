@@ -4,8 +4,11 @@
     <div class="scroll">
       <ul class="singers">
         <li v-for="s in singers" :key="s.name">
-          <f7-link href="/about" class="singer-box">
-            <img v-if="s.image" :src="`https://files.radio-golha.com${s.image}`" />
+          <f7-link :href="`/person/${s._id}/${s.name}`" class="singer-box">
+            <img
+              v-if="s.image"
+              :src="`https://files.radio-golha.com${s.image}`"
+            />
             <div v-if="!s.image" class="no-img">
               <f7-icon f7="mic"></f7-icon>
             </div>

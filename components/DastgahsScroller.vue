@@ -4,7 +4,7 @@
     <div class="scroll">
       <ul class="dastgahs">
         <li v-for="d in dastgahs" :key="d.title">
-          <f7-link href="/about" class="dastgah-box">
+          <f7-link :href="`/dastgah/${d.title}`" class="dastgah-box">
             <div class="dastgah-box-overlay"></div>
             <h4>{{ d.title }}</h4>
             <div class="dastgah-info">تعداد برنامه: {{ d.count }}</div>
