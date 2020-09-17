@@ -65,6 +65,23 @@
         class="img"
         :src="`https://files.radio-golha.com${track.singer[0].image}`"
       />
+
+      <div class="range" v-if="isLoad">
+        <f7-range
+          :min="0"
+          :max="track.duration"
+          :step="1"
+          :value="currentTime"
+          :label="false"
+          color="orange"
+          @range:change="goToTime"
+        ></f7-range>
+        <div class="times">
+          <div class="start">{{ mmss(currentTime) }}</div>
+          <div class="end">{{ mmss(track.duration) }}</div>
+        </div>
+      </div>
+
       <div class="info">
         <div class="title">{{ track.title }}</div>
         <div class="singers">
@@ -73,18 +90,18 @@
       </div>
       <div class="controller">
         <f7-button v-on:click="fastForward()">
-          <f7-icon size="28" f7="fastforward" color="white"></f7-icon>
+          <f7-icon size="48" f7="fastforward_round" color="white"></f7-icon>
         </f7-button>
         <f7-button v-if="playing" v-on:click="pause()">
-          <f7-icon size="34" f7="pause" color="white"></f7-icon>
+          <f7-icon size="60" f7="pause_round" color="white"></f7-icon>
         </f7-button>
         <f7-button v-if="!playing" v-on:click="play()">
-          <f7-icon size="34" f7="play" color="white"></f7-icon>
+          <f7-icon size="60" f7="play_round" color="white"></f7-icon>
         </f7-button>
         <f7-button v-on:click="fastBackward()">
           <f7-icon
-            size="28"
-            f7="fastforward"
+            size="48"
+            f7="fastforward_round"
             class="reverse"
             color="white"
           ></f7-icon>
@@ -193,6 +210,7 @@
       .right {
         display: flex;
         flex-direction: row;
+        margin-top: -10px;
         .reverse {
           -webkit-transform: scaleX(-1);
           transform: scaleX(-1);
@@ -211,17 +229,41 @@
     left: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
+    padding-top: 32px;
     .img {
-      width: 256px;
-      height: 256px;
+      width: 90%;
+      height: auto;
       object-fit: cover;
       filter: grayscale(100%);
       border-radius: 7.5px;
     }
+    .range {
+      width: 90%;
+      direction: ltr;
+      margin-top: 16px;
+      .range-knob-wrap {
+        display: none;
+      }
+      .times {
+        width: 100%;
+        display: flex;
+        .start,
+        .end {
+          color: #ffffff;
+          opacity: 0.6;
+          flex: 1;
+          font-family: IranSansWeb;
+          font-weight: 300;
+        }
+        .end {
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
+    }
     .info {
-      margin-top: 15px;
+      margin-top: 32px;
       width: 100%;
       .title {
         color: #ffffff;
@@ -260,7 +302,13 @@
     .controller {
       display: flex;
       flex-direction: row;
-      margin-top: 20px;
+      margin-top: 32px;
+      a {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
       .reverse {
         -webkit-transform: scaleX(-1);
         transform: scaleX(-1);
@@ -344,14 +392,27 @@ export default {
     },
     onSwipe(e) {
       if (e.direction === 8) {
-        // console.log(e.distance);
-        // this.pHeight += e.distance / 10;
-        // console.log(this.pHeight);
-        // document.getElementById("main_player").style.height = e.distance + "px";
         this.isFull = true;
       }
       if (e.direction === 16) {
         this.isFull = false;
+      }
+    },
+    mmss(secs) {
+      var secNum = parseInt(secs, 10);
+      var hours = Math.floor(secNum / 3600);
+      var minutes = hours * 60 + (Math.floor(secNum / 60) % 60);
+      var seconds = secNum % 60;
+      if (hours === 0) {
+        return [hours, minutes, seconds]
+          .map(v => (v < 10 ? "0" + v : v))
+          .filter((v, i) => v !== "00" || i > 0)
+          .join(":");
+      } else {
+        return [minutes, seconds]
+          .map(v => (v < 10 ? "0" + v : v))
+          .filter((v, i) => v !== "00" || i > 0)
+          .join(":");
       }
     }
   }
