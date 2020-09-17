@@ -349,7 +349,7 @@ export default {
     };
   },
   mounted: function() {
-    this.$nuxt.$on("track::pkay", track => {
+    this.$nuxt.$on("track::play", track => {
       this.isShow = true;
       this.isLoad = false;
       this.track = {};
@@ -363,6 +363,10 @@ export default {
         this.isLoad = true;
         this.setCurrentTime();
       });
+      this.$store.commit("golha/setCurrentTrack", track);
+    });
+    this.$nuxt.$on("track::pause", track => {
+      this.pause();
     });
   },
   methods: {

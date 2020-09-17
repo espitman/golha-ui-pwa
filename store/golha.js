@@ -1,9 +1,13 @@
 export const state = () => ({
-  programs: []
+  programs: [],
+  currentTrack: {}
 });
 
 export const mutations = {
   setPrograms(state, programs) {
     state.programs = programs;
+  },
+  setCurrentTrack(state, track) {
+    state.currentTrack = track;
   }
 };
