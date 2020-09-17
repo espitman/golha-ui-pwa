@@ -1,6 +1,7 @@
 export const state = () => ({
   programs: [],
-  currentTrack: {}
+  currentTrack: {},
+  isPlaying: false
 });
 
 export const mutations = {
@@ -9,5 +10,8 @@ export const mutations = {
   },
   setCurrentTrack(state, track) {
     state.currentTrack = track;
+  },
+  setIsPlaying(state, status) {
+    state.isPlaying = status;
   }
 };

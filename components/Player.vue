@@ -364,9 +364,15 @@ export default {
         this.setCurrentTime();
       });
       this.$store.commit("golha/setCurrentTrack", track);
+      this.$store.commit("golha/setIsPlaying", true);
     });
     this.$nuxt.$on("track::pause", track => {
       this.pause();
+      this.$store.commit("golha/setIsPlaying", false);
+    });
+    this.$nuxt.$on("track::resume", track => {
+      this.play();
+      this.$store.commit("golha/setIsPlaying", true);
     });
   },
   methods: {

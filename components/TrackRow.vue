@@ -1,5 +1,9 @@
 <template>
-  <div class="trackRow" v-on:click="playTrack(track)">
+  <div
+    class="trackRow"
+    :class="{ current: $store.state.golha.currentTrack._id === track._id }"
+    v-on:click="playTrack(track)"
+  >
     <div class="inner">
       <img
         class="img"
@@ -12,7 +16,12 @@
         </div>
       </div>
       <div class="controller">
-        <f7-button v-if="$store.state.golha.currentTrack._id === track._id">
+        <f7-button
+          v-if="
+            $store.state.golha.currentTrack._id === track._id &&
+              $store.state.golha.isPlaying
+          "
+        >
           <f7-icon size="28" f7="pause" color="black"></f7-icon>
         </f7-button>
         <f7-button v-else>
@@ -31,6 +40,10 @@
   display: block;
   overflow: hidden;
   position: relative;
+  border-radius: 7.5px;
+  &.current {
+    background-color: #9e9e9e;
+  }
   .inner {
     display: flex;
     flex-direction: row;
@@ -99,8 +112,10 @@ export default {
     playTrack(track) {
       if (this.$store.state.golha.currentTrack._id !== track._id) {
         this.$nuxt.$emit("track::play", track);
+      } else if (this.$store.state.golha.isPlaying) {
+        this.$nuxt.$emit("track::pause");
       } else {
-        // this.$nuxt.$emit("track::pause");
+        this.$nuxt.$emit("track::resume");
       }
     }
   }
