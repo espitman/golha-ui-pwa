@@ -1,8 +1,8 @@
 <template>
   <div
     class="player"
-    v-bind:class="{ show: isShow, full: isFull }"
-    v-hammer:swipe="onSwipe"
+    :class="{ show: isShow, full: isFull }"
+    v-hammer:pan="onSwipe"
   >
     <audio v-if="Object.keys(track).length" id="player">
       <source
@@ -10,46 +10,80 @@
         type="audio/mpeg"
       />
     </audio>
-    <div class="range" v-if="isLoad">
-      <f7-range
-        :min="0"
-        :max="track.duration"
-        :step="1"
-        :value="currentTime"
-        :label="false"
-        color="orange"
-        @range:change="goToTime"
-      ></f7-range>
-    </div>
-    <div class="row" v-if="isLoad">
-      <div class="left">
-        <div class="avatar">
-          <img
-            v-if="track.singer.length"
-            class="img"
-            :src="`https://files.radio-golha.com${track.singer[0].image}`"
-          />
-        </div>
-        <div class="info">
-          <div class="title">{{ track.title }}</div>
-          <div class="singers">
-            <span v-for="s in track.singer" :key="s._id">{{ s.name }}</span>
+    <div class="player_bottom">
+      <div class="range" v-if="isLoad">
+        <f7-range
+          :min="0"
+          :max="track.duration"
+          :step="1"
+          :value="currentTime"
+          :label="false"
+          color="orange"
+          @range:change="goToTime"
+        ></f7-range>
+      </div>
+      <div class="row" v-if="isLoad">
+        <div class="left">
+          <div class="avatar">
+            <img
+              v-if="track.singer.length"
+              class="img"
+              :src="`https://files.radio-golha.com${track.singer[0].image}`"
+            />
+          </div>
+          <div class="info">
+            <div class="title">{{ track.title }}</div>
+            <div class="singers">
+              <span v-for="s in track.singer" :key="s._id">{{ s.name }}</span>
+            </div>
           </div>
         </div>
+        <div class="right">
+          <f7-button v-on:click="fastForward()">
+            <f7-icon size="22" f7="fastforward" color="white"></f7-icon>
+          </f7-button>
+          <f7-button v-if="playing" v-on:click="pause()">
+            <f7-icon size="28" f7="pause" color="white"></f7-icon>
+          </f7-button>
+          <f7-button v-if="!playing" v-on:click="play()">
+            <f7-icon size="28" f7="play" color="white"></f7-icon>
+          </f7-button>
+          <f7-button v-on:click="fastBackward()">
+            <f7-icon
+              size="22"
+              f7="fastforward"
+              class="reverse"
+              color="white"
+            ></f7-icon>
+          </f7-button>
+        </div>
       </div>
-      <div class="right">
+    </div>
+    <div class="player_full" v-if="isLoad">
+      <img
+        v-if="track.singer.length"
+        class="img"
+        :src="`https://files.radio-golha.com${track.singer[0].image}`"
+      />
+      <div class="info">
+        <div class="title">{{ track.title }}</div>
+        <div class="singers">
+          <span v-for="s in track.singer" :key="s._id">{{ s.name }}</span>
+        </div>
+      </div>
+      <div class="controller">
         <f7-button v-on:click="fastForward()">
-          <f7-icon size="22" f7="fastforward" color="white"></f7-icon>
+          <f7-icon size="28" f7="fastforward" color="white"></f7-icon>
         </f7-button>
         <f7-button v-if="playing" v-on:click="pause()">
-          <f7-icon size="28" f7="pause" color="white"></f7-icon>
+          <f7-icon size="34" f7="pause" color="white"></f7-icon>
         </f7-button>
         <f7-button v-if="!playing" v-on:click="play()">
-          <f7-icon size="28" f7="play" color="white"></f7-icon>
+          <f7-icon size="34" f7="play" color="white"></f7-icon>
         </f7-button>
         <f7-button v-on:click="fastBackward()">
           <f7-icon
-            size="22"
+            size="28"
             f7="fastforward"
             class="reverse"
             color="white"
@@ -72,83 +106,161 @@
   z-index: 5000;
   display: none;
   opacity: 0;
-  transition: height 0.3s ease-out;
+  transition: height 0.4s ease-out;
   &.show {
     opacity: 1;
     display: flex;
-    -webkit-animation: slide-top 0.3s both;
-    animation: slide-top 0.3s both;
+    -webkit-animation: slide-top 0.4s both;
+    animation: slide-top 0.4s both;
   }
   &.full {
     height: 100%;
-  }
-  .range {
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: -10px;
-    .range-knob {
-      display: none;
+    .player_bottom {
+      opacity: 0;
+    }
+    .player_full {
+      opacity: 1;
+      top: 0;
     }
   }
-  .row {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
+  .player_bottom {
     width: 100%;
-    margin-top: 5px;
-    .left {
-      width: 50%;
+    transition: opacity 0.4s ease-out;
+    .range {
+      width: 100%;
+      position: absolute;
+      left: 0;
+      top: -10px;
+      .range-knob {
+        display: none;
+      }
+    }
+    .row {
       display: flex;
       flex-direction: row-reverse;
-      .avatar {
-        .img {
-          width: 52px;
-          height: 52px;
-          object-fit: cover;
-          filter: grayscale(100%);
-          border-radius: 7.5px;
+      align-items: center;
+      width: 100%;
+      margin-top: 15px;
+      .left {
+        width: 50%;
+        display: flex;
+        flex-direction: row-reverse;
+        .avatar {
+          .img {
+            width: 52px;
+            height: 52px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            border-radius: 7.5px;
+          }
         }
-      }
-      .info {
-        width: calc(100% - 52px);
-        padding-left: 10px;
-        .title {
-          color: #ffffff;
-          font-family: IranSansWeb;
-          font-weight: 400;
-          font-size: 0.75rem;
-          text-align: left;
-        }
-        .singers {
-          display: flex;
-          flex-direction: row-reverse;
-          span {
-            margin: 0;
-            padding: 0;
-            font-family: IranSansWeb;
-            font-weight: lighter;
-            margin-top: 10px;
-            font-size: 0.65rem;
+        .info {
+          width: calc(100% - 52px);
+          padding-left: 10px;
+          .title {
             color: #ffffff;
-            opacity: 0.75;
-            &::after {
-              content: "،";
-              padding-left: 5px;
-            }
-            &:last-child {
-              &::after {
-                content: "";
-                padding-left: 0;
+            font-family: IranSansWeb;
+            font-weight: 400;
+            font-size: 0.75rem;
+            text-align: left;
+          }
+          .singers {
+            display: flex;
+            flex-direction: row-reverse;
+            span {
+              margin: 0;
+              padding: 0;
+              font-family: IranSansWeb;
+              font-weight: lighter;
+              margin-top: 10px;
+              font-size: 0.65rem;
+              color: #ffffff;
+              opacity: 0.75;
+              &::before {
+                content: "،";
+                padding-left: 5px;
+              }
+              &:last-child {
+                &::before {
+                  content: "";
+                  padding-left: 0;
+                }
               }
             }
           }
         }
       }
+      .right {
+        display: flex;
+        flex-direction: row;
+        .reverse {
+          -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+        }
+      }
     }
-    .right {
+  }
+  //==========================
+  .player_full {
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 75px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .img {
+      width: 256px;
+      height: 256px;
+      object-fit: cover;
+      filter: grayscale(100%);
+      border-radius: 7.5px;
+    }
+    .info {
+      margin-top: 15px;
+      width: 100%;
+      .title {
+        color: #ffffff;
+        font-family: IranSansWeb;
+        font-weight: 400;
+        font-size: 1.5rem;
+        text-align: center;
+      }
+      .singers {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: center;
+        span {
+          margin: 0;
+          padding: 0;
+          font-family: IranSansWeb;
+          font-weight: lighter;
+          margin-top: 10px;
+          font-size: 0.85rem;
+          color: #ffffff;
+          opacity: 0.75;
+          &::before {
+            content: "،";
+            padding-left: 5px;
+          }
+          &:last-child {
+            &::before {
+              content: "";
+              padding-left: 0;
+            }
+          }
+        }
+      }
+    }
+    .controller {
       display: flex;
       flex-direction: row;
+      margin-top: 20px;
       .reverse {
         -webkit-transform: scaleX(-1);
         transform: scaleX(-1);
@@ -184,7 +296,8 @@ export default {
       isFull: false,
       playing: false,
       isLoad: false,
-      currentTime: 0
+      currentTime: 0,
+      pHeight: 75
     };
   },
   mounted: function() {
@@ -231,6 +344,10 @@ export default {
     },
     onSwipe(e) {
       if (e.direction === 8) {
+        // console.log(e.distance);
+        // this.pHeight += e.distance / 10;
+        // console.log(this.pHeight);
+        // document.getElementById("main_player").style.height = e.distance + "px";
         this.isFull = true;
       }
       if (e.direction === 16) {
