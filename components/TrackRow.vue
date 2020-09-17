@@ -11,9 +11,7 @@
       />
       <div>
         <h4>{{ track.title }}</h4>
-        <div class="singers">
-          <h6 v-for="s in track.singer" :key="s._id">{{ s.name }}</h6>
-        </div>
+        <Singers :singers="track.singer" color="#000" :reverse="false" />
       </div>
       <div class="controller">
         <f7-button
@@ -62,28 +60,6 @@
       font-family: IranSansWeb;
       font-weight: 400;
       color: #000000;
-    }
-    .singers {
-      display: flex;
-      flex-direction: row;
-      h6 {
-        margin: 0;
-        padding: 0;
-        font-family: IranSansWeb;
-        font-weight: lighter;
-        margin-top: 10px;
-        color: #000000;
-        &::after {
-          content: "،";
-          padding-left: 5px;
-        }
-        &:last-child {
-          &::after {
-            content: "";
-            padding-left: 0;
-          }
-        }
-      }
     }
   }
   .controller {

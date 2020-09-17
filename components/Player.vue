@@ -33,9 +33,12 @@
           </div>
           <div class="info">
             <div class="title">{{ track.title }}</div>
-            <div class="singers">
-              <span v-for="s in track.singer" :key="s._id">{{ s.name }}</span>
-            </div>
+            <Singers
+              :singers="track.singer"
+              color="#FFF"
+              :reverse="true"
+              :center="false"
+            />
           </div>
         </div>
         <div class="right">
@@ -84,9 +87,12 @@
 
       <div class="info">
         <div class="title">{{ track.title }}</div>
-        <div class="singers">
-          <span v-for="s in track.singer" :key="s._id">{{ s.name }}</span>
-        </div>
+        <Singers
+          :singers="track.singer"
+          color="#FFF"
+          :reverse="true"
+          :center="true"
+        />
       </div>
       <div class="controller">
         <f7-button v-on:click="fastForward()">
@@ -181,30 +187,6 @@
             font-size: 0.75rem;
             text-align: left;
           }
-          .singers {
-            display: flex;
-            flex-direction: row-reverse;
-            span {
-              margin: 0;
-              padding: 0;
-              font-family: IranSansWeb;
-              font-weight: lighter;
-              margin-top: 10px;
-              font-size: 0.65rem;
-              color: #ffffff;
-              opacity: 0.75;
-              &::before {
-                content: "،";
-                padding-left: 5px;
-              }
-              &:last-child {
-                &::before {
-                  content: "";
-                  padding-left: 0;
-                }
-              }
-            }
-          }
         }
       }
       .right {
@@ -271,32 +253,6 @@
         font-weight: 400;
         font-size: 1.5rem;
         text-align: center;
-      }
-      .singers {
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-        justify-content: center;
-        span {
-          margin: 0;
-          padding: 0;
-          font-family: IranSansWeb;
-          font-weight: lighter;
-          margin-top: 10px;
-          font-size: 0.85rem;
-          color: #ffffff;
-          opacity: 0.75;
-          &::before {
-            content: "،";
-            padding-left: 5px;
-          }
-          &:last-child {
-            &::before {
-              content: "";
-              padding-left: 0;
-            }
-          }
-        }
       }
     }
     .controller {

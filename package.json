@@ -21,6 +21,7 @@
     "framework7-icons": "^3.0.1",
     "nuxt": "latest",
     "nuxt7": "latest",
+    "vue-dynamic-marquee": "^0.1.6",
     "vue2-hammer": "^2.1.2"
   },
   "devDependencies": {
