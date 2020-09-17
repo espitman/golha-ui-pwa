@@ -28,9 +28,7 @@ export default {
     this.singers = response[1].data.payload.persons;
     this.dastgahs = response[2].data.payload.dastgah;
     this.loading = false;
-  },
-  mounted() {
-    this.$store.commit("todo/add", "saeed");
+    this.$store.commit("golha/setPrograms", this.programs);
   }
 };
 </script>

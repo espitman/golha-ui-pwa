@@ -1,6 +1,13 @@
 <template>
   <f7-page>
-    <f7-navbar :title="name" backLink="Back"></f7-navbar>
+    <f7-navbar
+      :title="
+        $store.state.golha.programs.length
+          ? $store.state.golha.programs.find(p => p.name === name).title
+          : name
+      "
+      backLink="Back"
+    ></f7-navbar>
     <FullPageLoader v-if="loading" loading="loading" />
     <f7-block v-if="!loading">
       <TrackRow v-for="t in tracks" :key="t._id" :track="t" />
@@ -12,7 +19,7 @@
 export default {
   props: ["name"],
   data() {
-    return { loading: true, tracks: [] };
+    return { loading: true, tracks: [], programs: [] };
   },
   async fetch() {
     const promises = [
@@ -21,6 +28,8 @@ export default {
     const response = await Promise.all(promises);
     this.tracks = response[0].data.payload;
     this.loading = false;
-  }
+    this.programs = this.$store.state.golha.programs;
+  },
+  mounted() {}
 };
 </script>
