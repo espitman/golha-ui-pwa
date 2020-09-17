@@ -318,6 +318,7 @@ export default {
         this.playing = true;
         this.isLoad = true;
         this.setCurrentTime();
+        this.setMediaSession();
       });
       this.$store.commit("golha/setCurrentTrack", track);
       this.$store.commit("golha/setIsPlaying", true);
@@ -335,6 +336,7 @@ export default {
     play() {
       this.player.play();
       this.playing = true;
+      this.setMediaSession();
     },
     pause() {
       this.player.pause();
@@ -379,6 +381,17 @@ export default {
           .map(v => (v < 10 ? "0" + v : v))
           .filter((v, i) => v !== "00" || i > 0)
           .join(":");
+      }
+    },
+    setMediaSession() {
+      if ("mediaSession" in navigator) {
+        const src = `https://files.radio-golha.com${this.track.singer[0].image}`;
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: this.track.title,
+          artist: this.track.singer[0].name,
+          album: this.track.dastgah,
+          artwork: [{ src }]
+        });
       }
     }
   }
