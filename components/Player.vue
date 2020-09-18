@@ -325,22 +325,23 @@ export default {
     });
     this.$nuxt.$on("track::pause", track => {
       this.pause();
-      this.$store.commit("golha/setIsPlaying", false);
     });
     this.$nuxt.$on("track::resume", track => {
       this.play();
-      this.$store.commit("golha/setIsPlaying", true);
     });
+    this.mediaSessionEventsHandler();
   },
   methods: {
     play() {
       this.player.play();
       this.playing = true;
+      this.$store.commit("golha/setIsPlaying", true);
       this.setMediaSession();
     },
     pause() {
       this.player.pause();
       this.playing = false;
+      this.$store.commit("golha/setIsPlaying", false);
     },
     setCurrentTime() {
       this.player.ontimeupdate = () => {
@@ -393,6 +394,15 @@ export default {
           artwork: [{ src }]
         });
       }
+    },
+    mediaSessionEventsHandler() {
+      const self = this;
+      navigator.mediaSession.setActionHandler("play", function() {
+        self.play();
+      });
+      navigator.mediaSession.setActionHandler("pause", function() {
+        self.pause();
+      });
     }
   }
 };

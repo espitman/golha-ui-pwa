@@ -2,7 +2,7 @@
   <f7-page>
     <f7-navbar title="track" backLink="Back"></f7-navbar>
     <FullPageLoader v-if="loading" loading="loading" />
-    <f7-block v-if="!loading">
+    <div class="main" v-if="!loading">
       <h2>{{ track.title }}</h2>
       <audio controls autoplay="autoplay">
         <source
@@ -10,7 +10,7 @@
           type="audio/mpeg"
         />
       </audio>
-    </f7-block>
+    </div>
   </f7-page>
 </template>
 

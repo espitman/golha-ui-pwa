@@ -2,9 +2,9 @@
   <f7-page>
     <f7-navbar :title="name" backLink="Back"></f7-navbar>
     <FullPageLoader v-if="loading" loading="loading" />
-    <f7-block v-if="!loading">
+    <div class="main" v-if="!loading">
       <TrackRow v-for="t in tracks" :key="t._id" :track="t" />
-    </f7-block>
+    </div>
   </f7-page>
 </template>
 
