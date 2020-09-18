@@ -3,10 +3,28 @@
     <f7-navbar :title="name" backLink="Back"></f7-navbar>
     <FullPageLoader v-if="loading" loading="loading" />
     <div class="main" v-if="!loading">
+      <div class="person">
+        <img class="img" :src="`https://files.radio-golha.com${info.image}`" />
+      </div>
       <TrackRow v-for="t in tracks" :key="t._id" :track="t" />
     </div>
   </f7-page>
 </template>
+
+<style lang="scss">
+.person {
+  width: 100%;
+  margin-bottom: 15px;
+  text-align: center;
+  .img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    filter: grayscale(100%);
+    border-radius: 50%;
+  }
+}
+</style>
 
 <script>
 export default {
