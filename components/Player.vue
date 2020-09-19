@@ -317,7 +317,7 @@ export default {
         this.player.play();
         this.playing = true;
         this.isLoad = true;
-        this.setCurrentTime();
+        this.setAudioEvent();
         this.setMediaSession();
       });
       this.$store.commit("golha/setCurrentTrack", track);
@@ -343,9 +343,13 @@ export default {
       this.playing = false;
       this.$store.commit("golha/setIsPlaying", false);
     },
-    setCurrentTime() {
+    setAudioEvent() {
       this.player.ontimeupdate = () => {
         this.currentTime = parseInt(this.player.currentTime);
+      };
+      this.player.onended = () => {
+        console.log('EEEE')
+        this.pause();
       };
     },
     goToTime(value) {
