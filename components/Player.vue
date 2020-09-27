@@ -62,56 +62,60 @@
         </div>
       </div>
     </div>
-    <div class="player_full" v-if="isLoad">
-      <img
-        v-if="track.singer.length"
-        class="img"
-        :src="`https://files.radio-golha.com${track.singer[0].image}`"
-      />
+    <div class="popup popup-player">
+      <div class="block">
+        <div class="player_full" v-if="isLoad">
+          <img
+            v-if="track.singer.length"
+            class="img"
+            :src="`https://files.radio-golha.com${track.singer[0].image}`"
+          />
 
-      <div class="range" v-if="isLoad">
-        <f7-range
-          :min="0"
-          :max="track.duration"
-          :step="1"
-          :value="currentTime"
-          :label="false"
-          color="orange"
-          @range:change="goToTime"
-        ></f7-range>
-        <div class="times">
-          <div class="start">{{ mmss(currentTime) }}</div>
-          <div class="end">{{ mmss(track.duration) }}</div>
+          <div class="range" v-if="isLoad">
+            <f7-range
+              :min="0"
+              :max="track.duration"
+              :step="1"
+              :value="currentTime"
+              :label="false"
+              color="orange"
+              @range:change="goToTime"
+            ></f7-range>
+            <div class="times">
+              <div class="start">{{ mmss(currentTime) }}</div>
+              <div class="end">{{ mmss(track.duration) }}</div>
+            </div>
+          </div>
+
+          <div class="info">
+            <div class="title">{{ track.title }}</div>
+            <Singers
+              :singers="track.singer"
+              color="#FFF"
+              :reverse="true"
+              :center="true"
+            />
+          </div>
+          <div class="controller">
+            <f7-button v-on:click="fastForward()">
+              <f7-icon size="48" f7="fastforward_round" color="white"></f7-icon>
+            </f7-button>
+            <f7-button v-if="playing" v-on:click="pause()">
+              <f7-icon size="60" f7="pause_round" color="white"></f7-icon>
+            </f7-button>
+            <f7-button v-if="!playing" v-on:click="play()">
+              <f7-icon size="60" f7="play_round" color="white"></f7-icon>
+            </f7-button>
+            <f7-button v-on:click="fastBackward()">
+              <f7-icon
+                size="48"
+                f7="fastforward_round"
+                class="reverse"
+                color="white"
+              ></f7-icon>
+            </f7-button>
+          </div>
         </div>
-      </div>
-
-      <div class="info">
-        <div class="title">{{ track.title }}</div>
-        <Singers
-          :singers="track.singer"
-          color="#FFF"
-          :reverse="true"
-          :center="true"
-        />
-      </div>
-      <div class="controller">
-        <f7-button v-on:click="fastForward()">
-          <f7-icon size="48" f7="fastforward_round" color="white"></f7-icon>
-        </f7-button>
-        <f7-button v-if="playing" v-on:click="pause()">
-          <f7-icon size="60" f7="pause_round" color="white"></f7-icon>
-        </f7-button>
-        <f7-button v-if="!playing" v-on:click="play()">
-          <f7-icon size="60" f7="play_round" color="white"></f7-icon>
-        </f7-button>
-        <f7-button v-on:click="fastBackward()">
-          <f7-icon
-            size="48"
-            f7="fastforward_round"
-            class="reverse"
-            color="white"
-          ></f7-icon>
-        </f7-button>
       </div>
     </div>
   </div>
@@ -201,74 +205,78 @@
     }
   }
   //==========================
-  .player_full {
-    opacity: 0;
-    transition: opacity 0.4s ease-out;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 75px;
-    left: 0;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding-top: 32px;
-    .img {
-      width: 90%;
-      height: auto;
-      object-fit: cover;
-      filter: grayscale(100%);
-      border-radius: 7.5px;
+}
+.popup {
+  background: #0f0f0f;
+}
+.player_full {
+  background: #0f0f0f;
+  opacity: 1;
+  // transition: opacity 0.4s ease-out;
+  width: 100%;
+  height: 100%;
+  // position: absolute;
+  top: 0px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 32px;
+  .img {
+    width: 90%;
+    height: auto;
+    object-fit: cover;
+    filter: grayscale(100%);
+    border-radius: 7.5px;
+  }
+  .range {
+    width: 90%;
+    direction: ltr;
+    margin-top: 16px;
+    .range-knob-wrap {
+      display: none;
     }
-    .range {
-      width: 90%;
-      direction: ltr;
-      margin-top: 16px;
-      .range-knob-wrap {
-        display: none;
-      }
-      .times {
-        width: 100%;
-        display: flex;
-        .start,
-        .end {
-          color: #ffffff;
-          opacity: 0.6;
-          flex: 1;
-          font-family: IranSansWeb;
-          font-weight: 300;
-        }
-        .end {
-          display: flex;
-          justify-content: flex-end;
-        }
-      }
-    }
-    .info {
-      margin-top: 32px;
+    .times {
       width: 100%;
-      .title {
+      display: flex;
+      .start,
+      .end {
         color: #ffffff;
+        opacity: 0.6;
+        flex: 1;
         font-family: IranSansWeb;
-        font-weight: 400;
-        font-size: 1.5rem;
-        text-align: center;
+        font-weight: 300;
+      }
+      .end {
+        display: flex;
+        justify-content: flex-end;
       }
     }
-    .controller {
+  }
+  .info {
+    margin-top: 32px;
+    width: 100%;
+    .title {
+      color: #ffffff;
+      font-family: IranSansWeb;
+      font-weight: 400;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+  }
+  .controller {
+    display: flex;
+    flex-direction: row;
+    margin-top: 32px;
+    a {
+      height: 60px;
       display: flex;
-      flex-direction: row;
-      margin-top: 32px;
-      a {
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .reverse {
-        -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
-      }
+      align-items: center;
+      justify-content: center;
+    }
+    .reverse {
+      -webkit-transform: scaleX(-1);
+      transform: scaleX(-1);
     }
   }
 }
@@ -291,6 +299,9 @@
 </style>
 
 <script>
+import Framework7 from "framework7";
+import Dom7 from "dom7";
+
 export default {
   data() {
     return {
@@ -305,6 +316,7 @@ export default {
     };
   },
   mounted: function() {
+    this.popupReady();
     this.$nuxt.$on("track::play", track => {
       this.isShow = true;
       this.isLoad = false;
@@ -332,6 +344,14 @@ export default {
     this.mediaSessionEventsHandler();
   },
   methods: {
+    popupReady() {
+      this.$f7ready(f7 => {
+        var swipeToClosePopup = f7.popup.create({
+          el: ".popup-player",
+          swipeToClose: "to-bottom"
+        });
+      });
+    },
     play() {
       this.player.play();
       this.playing = true;
@@ -348,7 +368,7 @@ export default {
         this.currentTime = parseInt(this.player.currentTime);
       };
       this.player.onended = () => {
-        console.log('EEEE')
+        console.log("EEEE");
         this.pause();
       };
     },
@@ -364,11 +384,14 @@ export default {
       this.player.currentTime += 10;
     },
     onSwipe(e) {
+      const $$ = Dom7;
+
       if (e.direction === 8) {
-        this.isFull = true;
+        // this.isFull = true;
+        this.$f7.popup.open(".popup-player");
       }
       if (e.direction === 16) {
-        this.isFull = false;
+        // this.isFull = false;
       }
     },
     mmss(secs) {
