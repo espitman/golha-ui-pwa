@@ -11,7 +11,7 @@
       <f7-nav-left back-link="Back"> </f7-nav-left>
     </f7-navbar>
     <FullPageLoader v-if="loading" loading="loading" />
-    <div class="person">
+    <div class="person" v-if="!loading">
       <img class="img" :src="`https://files.radio-golha.com${info.image}`" />
     </div>
     <div class="main" v-if="!loading">
