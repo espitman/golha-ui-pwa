@@ -63,22 +63,23 @@
     }
   }
 }
-
-.main {
-  margin-top: -56px;
-}
-.person {
-  width: 100%;
-  margin-bottom: 15px;
-  text-align: center;
-  position: relative;
-  top: -56px;
-  .img {
+#person-page {
+  .main {
+    margin-top: -56px;
+  }
+  .person {
     width: 100%;
-    height: auto;
-    object-fit: cover;
-    filter: grayscale(100%);
-    transition: height 0.5s ease;
+    margin-bottom: 15px;
+    text-align: center;
+    position: relative;
+    top: -56px;
+    .img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      filter: grayscale(100%);
+      transition: height 0.5s ease;
+    }
   }
 }
 </style>

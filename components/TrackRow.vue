@@ -2,7 +2,6 @@
   <div
     class="trackRow"
     :class="{ current: $store.state.golha.currentTrack._id === track._id }"
-    v-on:click="playTrack(track)"
   >
     <div class="inner">
       <img
@@ -19,14 +18,15 @@
             $store.state.golha.currentTrack._id === track._id &&
               $store.state.golha.isPlaying
           "
+          v-on:click="playTrack(track)"
         >
           <f7-icon size="28" f7="pause" color="black"></f7-icon>
         </f7-button>
-        <f7-button v-else>
+        <f7-button v-else v-on:click="playTrack(track)">
           <f7-icon size="28" f7="play" color="black"></f7-icon>
         </f7-button>
-        <f7-button>
-          <f7-icon size="28" f7="more" color="black"></f7-icon>
+        <f7-button v-on:click="openActionSheet(track)">
+          <f7-icon size="28" f7="more_fill" color="black"></f7-icon>
         </f7-button>
       </div>
     </div>
@@ -69,7 +69,7 @@
     width: 64px;
     height: 100%;
     position: absolute;
-    left: 0;
+    left: 15px;
     top: 0;
     display: flex;
     align-items: center;
@@ -85,7 +85,7 @@
 export default {
   props: ["track"],
   data() {
-    return { loading: true, tracks: [] };
+    return { loading: true, tracks: [], ac: {} };
   },
   methods: {
     playTrack(track) {
@@ -96,6 +96,10 @@ export default {
       } else {
         this.$nuxt.$emit("track::resume");
       }
+    },
+    openActionSheet(track) {
+      this.$nuxt.$emit("track::action", track);
+      // this.$f7.actions.open(".actionsTrack");
     }
   }
 };

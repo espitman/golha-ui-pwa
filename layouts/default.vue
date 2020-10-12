@@ -9,6 +9,7 @@
     </f7-panel>
     <nuxt />
     <Player />
+    <TrackAction />
   </div>
 </template>
 
