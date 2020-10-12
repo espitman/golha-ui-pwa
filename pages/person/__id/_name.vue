@@ -1,6 +1,6 @@
 <template>
   <f7-page id="person-page">
-    <f7-navbar :class="{ transparent }">
+    <f7-navbar id="person-page-navbar" :class="{ transparent }">
       <f7-nav-right>
         <img
           class="avatar"
@@ -8,7 +8,7 @@
         />
       </f7-nav-right>
       <f7-nav-title>{{ name }}</f7-nav-title>
-      <f7-nav-left back-link="Back"> </f7-nav-left>
+      <f7-nav-left back-link=""> </f7-nav-left>
     </f7-navbar>
     <FullPageLoader v-if="loading" loading="loading" />
     <div class="person" v-if="!loading">
@@ -21,37 +21,44 @@
 </template>
 
 <style lang="scss">
-#person-page {
-  .navbar {
+#person-page-navbar {
+  .title {
+    margin-right: 64px;
+  }
+  .avatar {
+    width: 48px;
+    height: 48px;
+    margin-right: 8px;
+    display: block;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: height 0.5s ease;
+  }
+  .left {
+    position: absolute;
+    left: 0;
+  }
+  &.transparent {
+    .navbar-bg {
+      display: none;
+    }
     .title {
-      margin-right: 64px;
+      color: #fff;
+      margin-right: 16px;
+    }
+    .icon {
+      color: #fff;
     }
     .avatar {
-      width: 48px;
-      height: 48px;
-      margin-right: 8px;
-      display: block;
-      object-fit: cover;
-      filter: grayscale(100%);
-      transition: height 0.5s ease;
+      display: none;
     }
-    .left {
-      position: absolute;
-      left: 0;
-    }
+  }
+}
+.ios {
+  #person-page-navbar {
     &.transparent {
-      .navbar-bg {
-        display: none;
-      }
       .title {
-        color: #fff;
-        margin-right: 16px;
-      }
-      .icon {
-        color: #fff;
-      }
-      .avatar {
-        display: none;
+        margin-right: 32px;
       }
     }
   }

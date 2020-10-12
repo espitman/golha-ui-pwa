@@ -25,6 +25,9 @@
         <f7-button v-else>
           <f7-icon size="28" f7="play" color="black"></f7-icon>
         </f7-button>
+        <f7-button>
+          <f7-icon size="28" f7="more" color="black"></f7-icon>
+        </f7-button>
       </div>
     </div>
   </div>

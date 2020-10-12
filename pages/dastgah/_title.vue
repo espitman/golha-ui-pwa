@@ -1,6 +1,8 @@
 <template>
   <f7-page>
-    <f7-navbar :title="title" backLink="Back"></f7-navbar>
+    <f7-navbar>
+      <InnerNavbar :title="title" />
+    </f7-navbar>
     <FullPageLoader v-if="loading" loading="loading" />
     <div class="main" v-if="!loading">
       <TrackRow v-for="t in tracks" :key="t._id" :track="t" />

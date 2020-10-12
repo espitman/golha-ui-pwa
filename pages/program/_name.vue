@@ -1,13 +1,14 @@
 <template>
   <f7-page>
-    <f7-navbar
-      :title="
-        $store.state.golha.programs.length
-          ? $store.state.golha.programs.find(p => p.name === name).title
-          : name
-      "
-      backLink="Back"
-    ></f7-navbar>
+    <f7-navbar>
+      <InnerNavbar
+        :title="
+          $store.state.golha.programs.length
+            ? $store.state.golha.programs.find(p => p.name === name).title
+            : name
+        "
+      />
+    </f7-navbar>
     <FullPageLoader v-if="loading" loading="loading" />
     <div class="main" v-if="!loading">
       <TrackRow v-for="t in tracks" :key="t._id" :track="t" />
