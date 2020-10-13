@@ -99,7 +99,6 @@ export default {
     },
     openActionSheet(track) {
       this.$nuxt.$emit("track::action", track);
-      // this.$f7.actions.open(".actionsTrack");
     }
   }
 };
