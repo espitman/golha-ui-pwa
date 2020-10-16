@@ -1,76 +1,24 @@
 <template>
-  <div
-    class="player"
-    :class="{ show: isShow, full: isFull }"
-    v-hammer:pan="onSwipe"
-  >
+  <div>
     <audio v-if="Object.keys(track).length" id="player">
       <source
         :src="`https://files.radio-golha.com/golha/music/${track.file}`"
         type="audio/mpeg"
       />
     </audio>
-    <div class="player_bottom">
-      <div class="range" v-if="isLoad">
-        <f7-range
-          :min="0"
-          :max="track.duration"
-          :step="1"
-          :value="currentTime"
-          :label="false"
-          color="orange"
-          @range:change="goToTime"
-        ></f7-range>
-      </div>
-      <div class="row" v-if="isLoad">
-        <div class="left">
-          <div class="avatar">
-            <img
-              v-if="track.singer.length"
-              class="img"
-              :src="`https://files.radio-golha.com${track.singer[0].image}`"
-            />
-          </div>
-          <div class="info">
-            <div class="title">{{ track.title }}</div>
-            <Singers
-              :singers="track.singer"
-              color="#FFF"
-              :reverse="true"
-              :center="false"
-            />
-          </div>
-        </div>
-        <div class="right">
-          <f7-button v-on:click="fastForward()">
-            <f7-icon size="22" f7="fastforward" color="white"></f7-icon>
-          </f7-button>
-          <f7-button v-if="playing" v-on:click="pause()">
-            <f7-icon size="28" f7="pause" color="white"></f7-icon>
-          </f7-button>
-          <f7-button v-if="!playing" v-on:click="play()">
-            <f7-icon size="28" f7="play" color="white"></f7-icon>
-          </f7-button>
-          <f7-button v-on:click="fastBackward()">
-            <f7-icon
-              size="22"
-              f7="fastforward"
-              class="reverse"
-              color="white"
-            ></f7-icon>
-          </f7-button>
-        </div>
-      </div>
-    </div>
-    <div class="popup popup-player">
-      <div class="block">
-        <div class="player_full" v-if="isLoad">
-          <img
-            v-if="track.singer.length"
-            class="img"
-            :src="`https://files.radio-golha.com${track.singer[0].image}`"
-          />
 
+    <f7-sheet
+      id="player-sheet"
+      class="demo-sheet-swipe-to-step"
+      style="height:auto; --f7-sheet-bg-color: #0f0f0f;"
+      swipe-to-step
+      v-bind:backdrop="false"
+      v-bind:push="false"
+      @sheet:stepopen="isFull = true"
+      @sheet:stepclose="isFull = false"
+    >
+      <div class="sheet-modal-swipe-step player">
+        <div class="player_bottom" v-if="!isFull">
           <div class="range" v-if="isLoad">
             <f7-range
               :min="0"
@@ -81,75 +29,115 @@
               color="orange"
               @range:change="goToTime"
             ></f7-range>
-            <div class="times">
-              <div class="start">{{ mmss(currentTime) }}</div>
-              <div class="end">{{ mmss(track.duration) }}</div>
+          </div>
+          <div class="row" v-if="isLoad">
+            <div class="left">
+              <div class="avatar">
+                <img
+                  v-if="track.singer.length"
+                  class="img"
+                  :src="`https://files.radio-golha.com${track.singer[0].image}`"
+                />
+              </div>
+              <div class="info">
+                <div class="title">{{ track.title }}</div>
+                <Singers
+                  :singers="track.singer"
+                  color="#FFF"
+                  :reverse="true"
+                  :center="false"
+                />
+              </div>
             </div>
-          </div>
-
-          <div class="info">
-            <div class="title">{{ track.title }}</div>
-            <Singers
-              :singers="track.singer"
-              color="#FFF"
-              :reverse="true"
-              :center="true"
-            />
-          </div>
-          <div class="controller">
-            <f7-button v-on:click="fastForward()">
-              <f7-icon size="48" f7="fastforward_round" color="white"></f7-icon>
-            </f7-button>
-            <f7-button v-if="playing" v-on:click="pause()">
-              <f7-icon size="60" f7="pause_round" color="white"></f7-icon>
-            </f7-button>
-            <f7-button v-if="!playing" v-on:click="play()">
-              <f7-icon size="60" f7="play_round" color="white"></f7-icon>
-            </f7-button>
-            <f7-button v-on:click="fastBackward()">
-              <f7-icon
-                size="48"
-                f7="fastforward_round"
-                class="reverse"
-                color="white"
-              ></f7-icon>
-            </f7-button>
+            <div class="right">
+              <f7-button v-on:click="fastForward()">
+                <f7-icon size="22" f7="fastforward" color="white"></f7-icon>
+              </f7-button>
+              <f7-button v-if="playing" v-on:click="pause()">
+                <f7-icon size="28" f7="pause" color="white"></f7-icon>
+              </f7-button>
+              <f7-button v-if="!playing" v-on:click="play()">
+                <f7-icon size="28" f7="play" color="white"></f7-icon>
+              </f7-button>
+              <f7-button v-on:click="fastBackward()">
+                <f7-icon
+                  size="22"
+                  f7="fastforward"
+                  class="reverse"
+                  color="white"
+                ></f7-icon>
+              </f7-button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div class="player_bottom_large">
+        <div v-if="isFull" class="inner">
+          <div class="row">
+            <div class="avatar">
+              <img
+                v-if="track.singer.length"
+                class="img"
+                :src="`https://files.radio-golha.com${track.singer[0].image}`"
+              />
+            </div>
+            <div class="info">
+              <div class="title">{{ track.title }}</div>
+              <Singers
+                :singers="track.singer"
+                color="#FFF"
+                :reverse="true"
+                :center="false"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="range" v-if="isLoad">
+              <f7-range
+                :min="0"
+                :max="track.duration"
+                :step="1"
+                :value="currentTime"
+                :label="false"
+                color="orange"
+                @range:change="goToTime"
+              ></f7-range>
+            </div>
+          </div>
+          <div class="row">
+            <div class="controller">
+              <f7-button v-on:click="fastForward()">
+                <f7-icon size="28" f7="fastforward" color="white"></f7-icon>
+              </f7-button>
+              <f7-button v-if="playing" v-on:click="pause()">
+                <f7-icon size="34" f7="pause" color="white"></f7-icon>
+              </f7-button>
+              <f7-button v-if="!playing" v-on:click="play()">
+                <f7-icon size="34" f7="play" color="white"></f7-icon>
+              </f7-button>
+              <f7-button v-on:click="fastBackward()">
+                <f7-icon
+                  size="28"
+                  f7="fastforward"
+                  class="reverse"
+                  color="white"
+                ></f7-icon>
+              </f7-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </f7-sheet>
   </div>
 </template>
 
 <style lang="scss">
 .player {
-  position: fixed;
   width: calc(100% - 30px);
   padding: 0 15px;
   height: 75px;
-  left: 0;
-  bottom: 0;
   background: #0f0f0f;
-  z-index: 5000;
-  display: none;
-  opacity: 0;
-  transition: height 0.4s ease-out;
-  &.show {
-    opacity: 1;
-    display: flex;
-    -webkit-animation: slide-top 0.4s both;
-    animation: slide-top 0.4s both;
-  }
-  &.full {
-    height: 100%;
-    .player_bottom {
-      opacity: 0;
-    }
-    .player_full {
-      opacity: 1;
-      top: 0;
-    }
-  }
+  display: flex;
   .player_bottom {
     width: 100%;
     transition: opacity 0.4s ease-out;
@@ -204,96 +192,59 @@
       }
     }
   }
-  //==========================
 }
-.popup {
-  background: #0f0f0f;
-}
-.player_full {
-  background: #0f0f0f;
-  opacity: 1;
-  // transition: opacity 0.4s ease-out;
+.player_bottom_large {
   width: 100%;
-  height: 100%;
-  // position: absolute;
-  top: 0px;
-  left: 0;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding-top: 32px;
-  .img {
-    width: 90%;
-    height: auto;
-    object-fit: cover;
-    filter: grayscale(100%);
-    border-radius: 7.5px;
-  }
-  .range {
-    width: 90%;
-    direction: ltr;
-    margin-top: 16px;
-    .range-knob-wrap {
-      display: none;
-    }
-    .times {
-      width: 100%;
+  padding: 8px;
+  .inner {
+    margin-top: -75px;
+    .row {
       display: flex;
-      .start,
-      .end {
-        color: #ffffff;
-        opacity: 0.6;
-        flex: 1;
-        font-family: IranSansWeb;
-        font-weight: 300;
-      }
-      .end {
-        display: flex;
-        justify-content: flex-end;
-      }
-    }
-  }
-  .info {
-    margin-top: 32px;
-    width: 100%;
-    .title {
-      color: #ffffff;
-      font-family: IranSansWeb;
-      font-weight: 400;
-      font-size: 1.5rem;
-      text-align: center;
-    }
-  }
-  .controller {
-    display: flex;
-    flex-direction: row;
-    margin-top: 32px;
-    a {
-      height: 60px;
-      display: flex;
+      flex-direction: row-reverse;
       align-items: center;
-      justify-content: center;
+      width: calc(100% - 16px);
+      display: flex;
+      flex-direction: row-reverse;
+      .avatar {
+        .img {
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
+          filter: grayscale(100%);
+          border-radius: 7.5px;
+        }
+      }
+      .info {
+        width: calc(100% - 100px - 10px);
+        padding-left: 10px;
+        .title {
+          color: #ffffff;
+          font-family: IranSansWeb;
+          font-weight: 400;
+          font-size: 0.75rem;
+          text-align: left;
+        }
+      }
+      .range {
+        width: 100%;
+        padding: 10px 0;
+        .range-knob {
+          display: none;
+        }
+      }
+      .controller {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: 0 0 20px 0;
+        align-items: center;
+        justify-content: center;
+        .reverse {
+          -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+        }
+      }
     }
-    .reverse {
-      -webkit-transform: scaleX(-1);
-      transform: scaleX(-1);
-    }
-  }
-}
-@-webkit-keyframes slide-top {
-  0% {
-    bottom: -75px;
-  }
-  100% {
-    bottom: 0;
-  }
-}
-@keyframes slide-top {
-  0% {
-    bottom: -75px;
-  }
-  100% {
-    bottom: 0;
   }
 }
 </style>
@@ -316,7 +267,6 @@ export default {
     };
   },
   mounted: function() {
-    this.popupReady();
     this.$nuxt.$on("track::play", track => {
       this.clearPlayList();
       this.doPlay(track);
@@ -333,14 +283,6 @@ export default {
     this.mediaSessionEventsHandler();
   },
   methods: {
-    popupReady() {
-      this.$f7ready(f7 => {
-        var swipeToClosePopup = f7.popup.create({
-          el: ".popup-player",
-          swipeToClose: "to-bottom"
-        });
-      });
-    },
     doPlay(track) {
       this.isShow = true;
       this.isLoad = false;
@@ -355,6 +297,7 @@ export default {
         this.isLoad = true;
         this.setAudioEvent();
         this.setMediaSession();
+        this.openSheet();
       });
       this.$store.commit("golha/setCurrentTrack", track);
       this.$store.commit("golha/setIsPlaying", true);
@@ -389,12 +332,6 @@ export default {
     },
     fastForward() {
       this.player.currentTime += 10;
-    },
-    onSwipe(e) {
-      const $$ = Dom7;
-      if (e.direction === 8) {
-        this.$f7.popup.open(".popup-player");
-      }
     },
     mmss(secs) {
       var secNum = parseInt(secs, 10);
@@ -454,6 +391,9 @@ export default {
           this.doPlay(nextTrack);
         }
       }
+    },
+    openSheet() {
+      this.$f7.sheet.open("#player-sheet");
     }
   }
 };
