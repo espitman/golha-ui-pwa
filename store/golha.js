@@ -13,5 +13,8 @@ export const mutations = {
   },
   setIsPlaying(state, status) {
     state.isPlaying = status;
+  },
+  setPlayList(state, playList) {
+    state.playList = playList;
   }
 };

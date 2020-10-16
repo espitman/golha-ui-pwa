@@ -10,7 +10,9 @@
         >پخش</f7-actions-button
       >
       <f7-actions-button v-else v-on:click="pause()">توقف</f7-actions-button>
-      <f7-actions-button>افزودن به لیست درحال پخش</f7-actions-button>
+      <f7-actions-button v-on:click="addToPlayList()"
+        >افزودن به لیست درحال پخش</f7-actions-button
+      >
       <f7-actions-button color="red">لغو</f7-actions-button>
     </f7-actions-group>
   </f7-actions>
@@ -50,6 +52,16 @@ export default {
     },
     pause() {
       this.$nuxt.$emit("track::pause", this.track);
+    },
+    addToPlayList() {
+      let playList = this.$store.state.golha.playList || [];
+      playList.push(this.track);
+      playList = [...new Set(playList)];
+      console.log(playList);
+      this.$store.commit("golha/setPlayList", playList);
+      if (playList.length === 1) {
+        this.$nuxt.$emit("track::play", this.track);
+      }
     }
   }
 };
