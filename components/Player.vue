@@ -17,21 +17,66 @@
       @sheet:stepopen="isFull = true"
       @sheet:stepclose="isFull = false"
     >
-      <div class="sheet-modal-swipe-step player">
-        <div class="player_bottom" v-if="!isFull">
-          <div class="range" v-if="isLoad">
-            <f7-range
-              :min="0"
-              :max="track.duration"
-              :step="1"
-              :value="currentTime"
-              :label="false"
-              color="orange"
-              @range:change="goToTime"
-            ></f7-range>
+      <a href="/player">
+        <div class="sheet-modal-swipe-step player">
+          <div class="player_bottom" v-if="!isFull">
+            <a class="range" v-if="isLoad">
+              <f7-range
+                :min="0"
+                :max="track.duration"
+                :step="1"
+                :value="currentTime"
+                :label="false"
+                color="orange"
+                @range:change="goToTime"
+              ></f7-range>
+            </a>
+            <div class="row" v-if="isLoad">
+              <div class="left">
+                <div class="avatar">
+                  <img
+                    v-if="track && track.singer && track.singer.length"
+                    class="img"
+                    :src="
+                      `https://files.radio-golha.com${track.singer[0].image}`
+                    "
+                  />
+                </div>
+                <div class="info">
+                  <div class="title">{{ track.title }}</div>
+                  <Singers
+                    :singers="track.singer"
+                    color="#FFF"
+                    :reverse="true"
+                    :center="false"
+                  />
+                </div>
+              </div>
+              <div class="right">
+                <f7-button v-on:click="fastForward()">
+                  <f7-icon size="22" f7="fastforward" color="white"></f7-icon>
+                </f7-button>
+                <f7-button v-if="playing" v-on:click="pause()">
+                  <f7-icon size="28" f7="pause" color="white"></f7-icon>
+                </f7-button>
+                <f7-button v-if="!playing" v-on:click="play()">
+                  <f7-icon size="28" f7="play" color="white"></f7-icon>
+                </f7-button>
+                <f7-button v-on:click="fastBackward()">
+                  <f7-icon
+                    size="22"
+                    f7="fastforward"
+                    class="reverse"
+                    color="white"
+                  ></f7-icon>
+                </f7-button>
+              </div>
+            </div>
           </div>
-          <div class="row" v-if="isLoad">
-            <div class="left">
+        </div>
+        <div class="player_bottom_large">
+          <div v-if="isFull" class="inner">
+            <div class="row">
               <div class="avatar">
                 <img
                   v-if="track && track.singer && track.singer.length"
@@ -47,105 +92,64 @@
                   :reverse="true"
                   :center="false"
                 />
-              </div>
-            </div>
-            <div class="right">
-              <f7-button v-on:click="fastForward()">
-                <f7-icon size="22" f7="fastforward" color="white"></f7-icon>
-              </f7-button>
-              <f7-button v-if="playing" v-on:click="pause()">
-                <f7-icon size="28" f7="pause" color="white"></f7-icon>
-              </f7-button>
-              <f7-button v-if="!playing" v-on:click="play()">
-                <f7-icon size="28" f7="play" color="white"></f7-icon>
-              </f7-button>
-              <f7-button v-on:click="fastBackward()">
-                <f7-icon
-                  size="22"
-                  f7="fastforward"
-                  class="reverse"
-                  color="white"
-                ></f7-icon>
-              </f7-button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="player_bottom_large">
-        <div v-if="isFull" class="inner">
-          <div class="row">
-            <div class="avatar">
-              <img
-                v-if="track && track.singer && track.singer.length"
-                class="img"
-                :src="`https://files.radio-golha.com${track.singer[0].image}`"
-              />
-            </div>
-            <div class="info">
-              <div class="title">{{ track.title }}</div>
-              <Singers
-                :singers="track.singer"
-                color="#FFF"
-                :reverse="true"
-                :center="false"
-              />
-              <div class="duration-count">
-                <div class="duration">
-                  {{ mmss(track.duration) }} / {{ mmss(currentTime) }}
-                </div>
-                <div
-                  v-if="
-                    this.$store.state.golha.playList &&
-                      this.$store.state.golha.playList.length > 1
-                  "
-                  class="count"
-                >
-                  {{ this.$store.state.golha.playList.length }} /
-                  {{
-                    this.$store.state.golha.playList.findIndex(
-                      t => t._id === this.track._id
-                    ) + 1
-                  }}
+                <div class="duration-count">
+                  <div class="duration">
+                    {{ mmss(track.duration) }} / {{ mmss(currentTime) }}
+                  </div>
+                  <div
+                    v-if="
+                      this.$store.state.golha.playList &&
+                        this.$store.state.golha.playList.length > 1
+                    "
+                    class="count"
+                  >
+                    {{ this.$store.state.golha.playList.length }} /
+                    {{
+                      this.$store.state.golha.playList.findIndex(
+                        t => t._id === this.track._id
+                      ) + 1
+                    }}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="range" v-if="isLoad">
-              <f7-range
-                :min="0"
-                :max="track.duration"
-                :step="1"
-                :value="currentTime"
-                :label="false"
-                color="orange"
-                @range:change="goToTime"
-              ></f7-range>
+            <div class="row">
+              <a class="range" v-if="isLoad">
+                <f7-range
+                  :min="0"
+                  :max="track.duration"
+                  :step="1"
+                  :value="currentTime"
+                  :label="false"
+                  color="orange"
+                  @range:change="goToTime"
+                ></f7-range>
+              </a>
             </div>
-          </div>
-          <div class="row">
-            <div class="controller">
-              <f7-button v-on:click="fastForward()">
-                <f7-icon size="28" f7="fastforward" color="white"></f7-icon>
-              </f7-button>
-              <f7-button v-if="playing" v-on:click="pause()">
-                <f7-icon size="34" f7="pause" color="white"></f7-icon>
-              </f7-button>
-              <f7-button v-if="!playing" v-on:click="play()">
-                <f7-icon size="34" f7="play" color="white"></f7-icon>
-              </f7-button>
-              <f7-button v-on:click="fastBackward()">
-                <f7-icon
-                  size="28"
-                  f7="fastforward"
-                  class="reverse"
-                  color="white"
-                ></f7-icon>
-              </f7-button>
+            <div class="row">
+              <div class="controller">
+                <f7-button v-on:click="fastForward()">
+                  <f7-icon size="28" f7="fastforward" color="white"></f7-icon>
+                </f7-button>
+                <f7-button v-if="playing" v-on:click="pause()">
+                  <f7-icon size="34" f7="pause" color="white"></f7-icon>
+                </f7-button>
+                <f7-button v-if="!playing" v-on:click="play()">
+                  <f7-icon size="34" f7="play" color="white"></f7-icon>
+                </f7-button>
+                <f7-button v-on:click="fastBackward()">
+                  <f7-icon
+                    size="28"
+                    f7="fastforward"
+                    class="reverse"
+                    color="white"
+                  ></f7-icon>
+                </f7-button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </a>
     </f7-sheet>
   </div>
 </template>
