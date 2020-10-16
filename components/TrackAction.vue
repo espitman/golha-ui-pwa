@@ -54,14 +54,7 @@ export default {
       this.$nuxt.$emit("track::pause", this.track);
     },
     addToPlayList() {
-      let playList = this.$store.state.golha.playList || [];
-      playList.push(this.track);
-      playList = [...new Set(playList)];
-      console.log(playList);
-      this.$store.commit("golha/setPlayList", playList);
-      if (playList.length === 1) {
-        this.$nuxt.$emit("track::play", this.track);
-      }
+      this.$nuxt.$emit("track::addToPlayList", this.track);
     }
   }
 };

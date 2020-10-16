@@ -318,6 +318,30 @@ export default {
   mounted: function() {
     this.popupReady();
     this.$nuxt.$on("track::play", track => {
+      this.clearPlayList();
+      this.doPlay(track);
+    });
+    this.$nuxt.$on("track::pause", track => {
+      this.pause();
+    });
+    this.$nuxt.$on("track::resume", track => {
+      this.play();
+    });
+    this.$nuxt.$on("track::addToPlayList", track => {
+      this.addToPlayList(track);
+    });
+    this.mediaSessionEventsHandler();
+  },
+  methods: {
+    popupReady() {
+      this.$f7ready(f7 => {
+        var swipeToClosePopup = f7.popup.create({
+          el: ".popup-player",
+          swipeToClose: "to-bottom"
+        });
+      });
+    },
+    doPlay(track) {
       this.isShow = true;
       this.isLoad = false;
       this.track = {};
@@ -334,23 +358,6 @@ export default {
       });
       this.$store.commit("golha/setCurrentTrack", track);
       this.$store.commit("golha/setIsPlaying", true);
-    });
-    this.$nuxt.$on("track::pause", track => {
-      this.pause();
-    });
-    this.$nuxt.$on("track::resume", track => {
-      this.play();
-    });
-    this.mediaSessionEventsHandler();
-  },
-  methods: {
-    popupReady() {
-      this.$f7ready(f7 => {
-        var swipeToClosePopup = f7.popup.create({
-          el: ".popup-player",
-          swipeToClose: "to-bottom"
-        });
-      });
     },
     play() {
       this.player.play();
@@ -368,8 +375,8 @@ export default {
         this.currentTime = parseInt(this.player.currentTime);
       };
       this.player.onended = () => {
-        console.log("EEEE");
         this.pause();
+        this.handlePlayList();
       };
     },
     goToTime(value) {
@@ -385,13 +392,8 @@ export default {
     },
     onSwipe(e) {
       const $$ = Dom7;
-
       if (e.direction === 8) {
-        // this.isFull = true;
         this.$f7.popup.open(".popup-player");
-      }
-      if (e.direction === 16) {
-        // this.isFull = false;
       }
     },
     mmss(secs) {
@@ -430,6 +432,28 @@ export default {
       navigator.mediaSession.setActionHandler("pause", function() {
         self.pause();
       });
+    },
+    addToPlayList(track) {
+      let playList = this.$store.state.golha.playList || [];
+      playList.push(track);
+      playList = [...new Set(playList)];
+      this.$store.commit("golha/setPlayList", playList);
+      if (playList.length === 1) {
+        this.doPlay(track);
+      }
+    },
+    clearPlayList() {
+      this.$store.commit("golha/setPlayList", []);
+    },
+    handlePlayList() {
+      const playList = this.$store.state.golha.playList;
+      if (playList && playList.length > 1) {
+        const currentIndex = playList.findIndex(t => t._id === this.track._id);
+        const nextTrack = playList[currentIndex + 1];
+        if (nextTrack) {
+          this.doPlay(nextTrack);
+        }
+      }
     }
   }
 };
