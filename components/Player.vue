@@ -34,7 +34,7 @@
             <div class="left">
               <div class="avatar">
                 <img
-                  v-if="track.singer.length"
+                  v-if="track && track.singer && track.singer.length"
                   class="img"
                   :src="`https://files.radio-golha.com${track.singer[0].image}`"
                 />
@@ -76,7 +76,7 @@
           <div class="row">
             <div class="avatar">
               <img
-                v-if="track.singer.length"
+                v-if="track && track.singer && track.singer.length"
                 class="img"
                 :src="`https://files.radio-golha.com${track.singer[0].image}`"
               />
@@ -89,6 +89,25 @@
                 :reverse="true"
                 :center="false"
               />
+              <div class="duration-count">
+                <div class="duration">
+                  {{ mmss(track.duration) }} / {{ mmss(currentTime) }}
+                </div>
+                <div
+                  v-if="
+                    this.$store.state.golha.playList &&
+                      this.$store.state.golha.playList.length > 1
+                  "
+                  class="count"
+                >
+                  {{ this.$store.state.golha.playList.length }} /
+                  {{
+                    this.$store.state.golha.playList.findIndex(
+                      t => t._id === this.track._id
+                    ) + 1
+                  }}
+                </div>
+              </div>
             </div>
           </div>
           <div class="row">
@@ -220,9 +239,26 @@
         .title {
           color: #ffffff;
           font-family: IranSansWeb;
-          font-weight: 400;
-          font-size: 0.75rem;
+          font-weight: 500;
+          font-size: 1.25rem;
           text-align: left;
+        }
+        .duration-count {
+          display: flex;
+          flex-direction: row-reverse;
+          font-size: 0.75rem;
+          opacity: 0.75;
+          margin-top: 18px;
+          .duration {
+            color: #ffffff;
+            width: 50%;
+            text-align: left;
+          }
+          .count {
+            color: #ffffff;
+            width: 50%;
+            text-align: right;
+          }
         }
       }
       .range {
@@ -384,6 +420,7 @@ export default {
     },
     handlePlayList() {
       const playList = this.$store.state.golha.playList;
+
       if (playList && playList.length > 1) {
         const currentIndex = playList.findIndex(t => t._id === this.track._id);
         const nextTrack = playList[currentIndex + 1];

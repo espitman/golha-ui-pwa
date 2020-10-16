@@ -104,13 +104,6 @@ export default {
     eventScroll() {
       const elm = document.getElementsByClassName("img")[0];
       const w = elm.clientWidth;
-      console.log(
-        elm,
-        w,
-        document
-          .getElementById("person-page")
-          .getElementsByClassName("page-content")[0]
-      );
       document
         .getElementById("person-page")
         .getElementsByClassName("page-content")[0]
