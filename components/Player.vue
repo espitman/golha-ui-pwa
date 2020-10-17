@@ -10,7 +10,6 @@
     <f7-sheet
       id="player-sheet"
       class="demo-sheet-swipe-to-step"
-      
       style="height:auto; --f7-sheet-bg-color: #0f0f0f;"
       swipe-to-step
       v-bind:backdrop="false"
@@ -18,8 +17,8 @@
       @sheet:stepopen="isFull = true"
       @sheet:stepclose="isFull = false"
     >
-      <a href="/player" class="ripple-color-white" :class="{ invisible: !isVisible }">
-        <div class="sheet-modal-swipe-step player">
+      <a href="/player" class="ripple-color-white" style="display:block;width:100%;">
+        <div class="sheet-modal-swipe-step player"  :class="{ invisible: !isVisible }">
           <div class="player_bottom" v-if="!isFull">
             <a class="range" v-if="isLoad">
               <f7-range
@@ -75,7 +74,7 @@
             </div>
           </div>
         </div>
-        <div class="player_bottom_large">
+        <div class="player_bottom_large"  :class="{ invisible: !isVisible }">
           <div v-if="isFull" class="inner">
             <div class="row">
               <div class="avatar">
