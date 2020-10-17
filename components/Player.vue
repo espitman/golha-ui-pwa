@@ -17,8 +17,13 @@
       @sheet:stepopen="isFull = true"
       @sheet:stepclose="isFull = false"
     >
-      <a href="/player" class="ripple-color-white" style="display:block;width:100%;">
-        <div class="sheet-modal-swipe-step player"  :class="{ invisible: !isVisible }">
+      <a
+        href="/player"
+        class="ripple-color-white"
+        style="display:block;width:100%;"
+        :class="isVisible ? 'visible' : 'invisible'"
+      >
+        <div class="sheet-modal-swipe-step player">
           <div class="player_bottom" v-if="!isFull">
             <a class="range" v-if="isLoad">
               <f7-range
@@ -74,7 +79,7 @@
             </div>
           </div>
         </div>
-        <div class="player_bottom_large"  :class="{ invisible: !isVisible }">
+        <div class="player_bottom_large">
           <div v-if="isFull" class="inner">
             <div class="row">
               <div class="avatar">
@@ -156,7 +161,8 @@
 
 <style lang="scss">
 .invisible {
-  display: none;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 .player {
   width: calc(100% - 30px);
