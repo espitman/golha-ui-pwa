@@ -10,6 +10,7 @@
     <f7-sheet
       id="player-sheet"
       class="demo-sheet-swipe-to-step"
+      
       style="height:auto; --f7-sheet-bg-color: #0f0f0f;"
       swipe-to-step
       v-bind:backdrop="false"
@@ -17,7 +18,7 @@
       @sheet:stepopen="isFull = true"
       @sheet:stepclose="isFull = false"
     >
-      <a href="/player">
+      <a href="/player" class="ripple-color-white" :class="{ invisible: !isVisible }">
         <div class="sheet-modal-swipe-step player">
           <div class="player_bottom" v-if="!isFull">
             <a class="range" v-if="isLoad">
@@ -155,6 +156,9 @@
 </template>
 
 <style lang="scss">
+.invisible {
+  display: none;
+}
 .player {
   width: calc(100% - 30px);
   padding: 0 15px;
@@ -290,9 +294,6 @@
 </style>
 
 <script>
-import Framework7 from "framework7";
-import Dom7 from "dom7";
-
 export default {
   data() {
     return {
@@ -302,6 +303,7 @@ export default {
       isFull: false,
       playing: false,
       isLoad: false,
+      isVisible: true,
       currentTime: 0,
       pHeight: 75
     };
@@ -319,6 +321,14 @@ export default {
     });
     this.$nuxt.$on("track::addToPlayList", track => {
       this.addToPlayList(track);
+    });
+    this.$nuxt.$on("player::hide", () => {
+      console.log("player::hide");
+      this.isVisible = false;
+    });
+    this.$nuxt.$on("player::show", () => {
+      console.log("player::show");
+      this.isVisible = true;
     });
     this.mediaSessionEventsHandler();
   },

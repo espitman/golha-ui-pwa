@@ -20,3 +20,7 @@ body {
   overflow-x: hidden;
 }
 </style>
+
+<script>
+export default {};
+</script>
