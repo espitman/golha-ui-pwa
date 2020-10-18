@@ -15,7 +15,13 @@
         class="img"
         :src="`https://files.radio-golha.com${track.singer[0].image}`"
       />
-      <f7-fab position="right-bottom" slot="fixed" color="yellow" href="/playlist">
+      <f7-fab
+        position="right-bottom"
+        slot="fixed"
+        color="yellow"
+        href="/playlist"
+        v-if="$store.state.golha.playList.length"
+      >
         <f7-icon
           class="size-25"
           ios="f7:list_dash"
