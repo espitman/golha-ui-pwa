@@ -161,8 +161,9 @@
 
 <style lang="scss">
 .invisible {
-  opacity: 0 !important;
-  pointer-events: none !important;
+  // opacity: 0 !important;
+  // pointer-events: none !important;
+  display: none !important;
 }
 .player {
   width: calc(100% - 30px);
