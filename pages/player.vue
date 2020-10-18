@@ -1,9 +1,29 @@
 <template>
-  <f7-page id="player-page" @page:init="pageInit" @page:beforeout="beforeout">
-    <img
-      class="img"
-      :src="`https://files.radio-golha.com${track.singer[0].image}`"
-    />
+  <f7-page
+    id="player-page"
+    @page:init="pageInit"
+    @page:reinit="pageInit"
+    @page:beforeout="beforeout"
+  >
+    <f7-navbar id="player-page-navbar" class="transparent">
+      <f7-nav-right></f7-nav-right>
+      <f7-nav-title></f7-nav-title>
+      <f7-nav-left back-link=""> </f7-nav-left>
+    </f7-navbar>
+    <div class="img-box">
+      <img
+        class="img"
+        :src="`https://files.radio-golha.com${track.singer[0].image}`"
+      />
+      <f7-fab position="right-bottom" slot="fixed" color="yellow" href="/">
+        <f7-icon
+          class="size-25"
+          ios="f7:list_dash"
+          aurora="f7:list_dash"
+          md="material:list_dash"
+        ></f7-icon>
+      </f7-fab>
+    </div>
     <h1>{{ $store.state.golha.currentTrack.title }}</h1>
     <Singers
       :singers="$store.state.golha.currentTrack.singer"
@@ -11,6 +31,23 @@
       :reverse="true"
       :center="false"
     />
+    <div class="range">
+      <f7-range
+        :min="0"
+        :max="$store.state.golha.currentTrack.duration"
+        :step="1"
+        :value="currentTime"
+        :label="false"
+        color="orange"
+        @range:change="goToTime"
+      ></f7-range>
+      <div class="text">
+        <div class="left">{{ mmss(currentTime) }}</div>
+        <div class="right">
+          {{ mmss($store.state.golha.currentTrack.duration) }}
+        </div>
+      </div>
+    </div>
     <div class="controller">
       <f7-button v-on:click="fastForward()">
         <f7-icon size="34" f7="fastforward" color="white"></f7-icon>
@@ -30,33 +67,41 @@
         ></f7-icon>
       </f7-button>
     </div>
-    <div class="range">
-      <f7-range
-        :min="0"
-        :max="$store.state.golha.currentTrack.duration"
-        :step="1"
-        :value="currentTime"
-        :label="false"
-        color="orange"
-        @range:change="goToTime"
-      ></f7-range>
-      <div class="text">
-        <div class="left">{{ mmss(currentTime) }}</div>
-        <div class="right">
-          {{ mmss($store.state.golha.currentTrack.duration) }}
-        </div>
-      </div>
-    </div>
   </f7-page>
 </template>
 
 <style lang="scss">
+#player-page-navbar {
+  .left {
+    position: absolute;
+    left: 0;
+    .icon {
+      color: #fff;
+    }
+  }
+  &.transparent {
+    .navbar-bg {
+      display: none;
+    }
+  }
+}
+
 #player-page {
   background: #0f0f0f;
-  .img {
-    width: 100%;
-    object-fit: cover;
-    filter: grayscale(100%);
+  .img-box {
+    position: relative;
+    margin-top: -56px;
+    .img {
+      width: 100%;
+      object-fit: cover;
+      filter: grayscale(100%);
+    }
+    .fab {
+      bottom: -24px;
+      i {
+        font-size: 35px;
+      }
+    }
   }
   h1 {
     color: #fff;
@@ -81,7 +126,7 @@
   }
   .range {
     width: 90%;
-    margin: 0 5%;
+    margin: 32px 5% 16px 5%;
     direction: ltr;
     .range-knob {
       display: none;
