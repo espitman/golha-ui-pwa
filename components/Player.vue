@@ -327,12 +327,21 @@ export default {
     this.$nuxt.$on("track::addToPlayList", track => {
       this.addToPlayList(track);
     });
+    this.$nuxt.$on("track::goToTime", time => {
+      this.goToTime(time);
+    });
+    this.$nuxt.$on("track::fastForward", time => {
+      this.fastForward();
+    });
+    this.$nuxt.$on("track::fastBackward", time => {
+      this.fastBackward();
+    });
     this.$nuxt.$on("player::hide", () => {
-      console.log("player::hide");
+      console.log("player::hide", this.$nuxt.$route.path);
       this.isVisible = false;
     });
     this.$nuxt.$on("player::show", () => {
-      console.log("player::show");
+      console.log("player::show", this.$nuxt.$route.path);
       this.isVisible = true;
     });
     this.mediaSessionEventsHandler();
@@ -371,6 +380,7 @@ export default {
     setAudioEvent() {
       this.player.ontimeupdate = () => {
         this.currentTime = parseInt(this.player.currentTime);
+        this.$nuxt.$emit("track::time", this.currentTime);
       };
       this.player.onended = () => {
         this.pause();
@@ -439,7 +449,6 @@ export default {
     },
     handlePlayList() {
       const playList = this.$store.state.golha.playList;
-
       if (playList && playList.length > 1) {
         const currentIndex = playList.findIndex(t => t._id === this.track._id);
         const nextTrack = playList[currentIndex + 1];
