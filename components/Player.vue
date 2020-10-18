@@ -20,7 +20,6 @@
       <a
         href="/player"
         class="ripple-color-white"
-        style="display:block;width:100%;"
         :class="isVisible ? 'visible' : 'invisible'"
       >
         <div class="sheet-modal-swipe-step player">
@@ -161,18 +160,21 @@
 
 <style lang="scss">
 .invisible {
-  // opacity: 0 !important;
-  // pointer-events: none !important;
   display: none !important;
 }
+#player-sheet {
+  .sheet-modal-inner {
+    overflow: visible !important;
+  }
+}
 .player {
-  width: calc(100% - 30px);
-  padding: 0 15px;
+  width: 100%;
   height: 75px;
   background: #0f0f0f;
   display: flex;
   .player_bottom {
-    width: 100%;
+    width: calc(100% - 30px);
+    padding: 0 15px;
     transition: opacity 0.4s ease-out;
     .range {
       width: 100%;
