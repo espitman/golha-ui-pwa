@@ -20,7 +20,11 @@ module.exports = {
 
   // Framework7 Config
   framework7: {
-    // ...
+    app: {
+      view: {
+        stackPages: true
+      }
+    }
   },
 
   // Build configuration
