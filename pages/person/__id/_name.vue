@@ -10,7 +10,7 @@
       <f7-nav-title>{{ name }}</f7-nav-title>
       <f7-nav-left back-link=""> </f7-nav-left>
     </f7-navbar>
-    <FullPageLoader v-if="loading" loading="loading" />
+    <SkeletonPerson v-if="loading" />
     <div class="person" v-if="!loading">
       <img class="img" :src="`https://files.radio-golha.com${info.image}`" />
     </div>
