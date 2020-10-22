@@ -3,7 +3,7 @@
     <f7-navbar>
       <InnerNavbar :title="title" />
     </f7-navbar>
-    <FullPageLoader v-if="loading" loading="loading" />
+    <SkeletonProgram v-if="loading" />
     <div class="main" v-if="!loading">
       <TrackRow
         v-for="t in tracks"
