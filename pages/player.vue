@@ -13,7 +13,9 @@
     <div class="img-box">
       <img
         class="img"
-        :src="`https://files.radio-golha.com${track.singer[0].image}`"
+        :src="
+          `https://files.radio-golha.com${$store.state.golha.currentTrack.singer[0].image}`
+        "
       />
       <f7-fab
         position="right-bottom"

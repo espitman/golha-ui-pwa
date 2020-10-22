@@ -44,11 +44,20 @@ export default {
       current: {}
     };
   },
-  fetch() {
-    this.current = this.singers[this.index];
-  },
   mounted() {
+    this.current = this.singers[this.index];
     this.setCurrent();
+  },
+  watch: {
+    singers: function(newVal, oldVal) {
+      this.singers = newVal;
+      if (this.singers && this.singers.length > 1) {
+        this.setCurrent();
+      } else {
+        this.index = 0;
+        this.current = this.singers[0];
+      }
+    }
   },
   methods: {
     setCurrent() {
