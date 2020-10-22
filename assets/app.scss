@@ -48,7 +48,7 @@ body {
     opacity: 1;
   }
   50% {
-    opacity: 0.7;
+    opacity: 0.5;
   }
   100% {
     opacity: 1;
@@ -56,5 +56,5 @@ body {
 }
 
 .skeleton-block {
-  animation: flickerAnimation 2s infinite;
+  animation: flickerAnimation 1s infinite;
 }
