@@ -83,14 +83,18 @@
 
 <script>
 export default {
-  props: ["track"],
+  props: ["track", "isPlayList"],
   data() {
     return { loading: true, tracks: [], ac: {} };
   },
   methods: {
     playTrack(track) {
       if (this.$store.state.golha.currentTrack._id !== track._id) {
-        this.$nuxt.$emit("track::play", track);
+        if (!this.isPlayList) {
+          this.$nuxt.$emit("track::play", track);
+        } else {
+          this.$nuxt.$emit("playList::play", track);
+        }
       } else if (this.$store.state.golha.isPlaying) {
         this.$nuxt.$emit("track::pause");
       } else {

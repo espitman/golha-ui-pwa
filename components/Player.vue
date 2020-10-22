@@ -319,6 +319,7 @@ export default {
   mounted: function() {
     this.$nuxt.$on("track::play", track => {
       this.clearPlayList();
+      this.addToPlayList(track);
       this.doPlay(track);
     });
     this.$nuxt.$on("track::pause", track => {
@@ -344,8 +345,10 @@ export default {
       this.isVisible = false;
     });
     this.$nuxt.$on("player::show", () => {
-      console.log("player::show", this.$nuxt.$route.path);
       this.isVisible = true;
+    });
+    this.$nuxt.$on("playList::play", track => {
+      this.doPlay(track);
     });
     this.mediaSessionEventsHandler();
   },

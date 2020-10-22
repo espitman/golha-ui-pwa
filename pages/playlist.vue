@@ -8,6 +8,7 @@
         v-for="t in $store.state.golha.playList"
         :key="t._id"
         :track="t"
+        :isPlayList="true"
       />
     </div>
   </f7-page>

@@ -15,7 +15,12 @@
       <img class="img" :src="`https://files.radio-golha.com${info.image}`" />
     </div>
     <div class="main" v-if="!loading">
-      <TrackRow v-for="t in tracks" :key="t._id" :track="t" />
+      <TrackRow
+        v-for="t in tracks"
+        :key="t._id"
+        :track="t"
+        :isPlayList="false"
+      />
     </div>
   </f7-page>
 </template>
