@@ -6,11 +6,9 @@
       <f7-nav-left back-link=""> </f7-nav-left>
     </f7-navbar>
     <div class="img-box">
-      <img
-        class="img"
-        :src="
-          `https://files.radio-golha.com${$store.state.golha.currentTrack.singer[0].image}`
-        "
+      <Avatar
+        :image="$store.state.golha.currentTrack.singer[0].image"
+        radius="7.5"
       />
       <f7-fab
         position="right-bottom"
@@ -94,10 +92,16 @@
   .img-box {
     position: relative;
     margin-top: -56px;
-    .img {
+    .avatar-img {
       width: 100%;
-      object-fit: cover;
-      filter: grayscale(100%);
+      &.avatar-no-img {
+        background-color: #060606;
+        padding-bottom: 100%;
+        i {
+          position: absolute;
+          top: 40%;
+        }
+      }
     }
     .fab {
       bottom: -24px;

@@ -38,13 +38,13 @@
             <div class="row" v-if="isLoad">
               <div class="left">
                 <div class="avatar">
-                  <img
-                    v-if="track && track.singer && track.singer.length"
-                    class="img"
-                    :src="
-                      `https://files.radio-golha.com${track.singer[0].image}`
-                    "
-                  />
+                  <div v-if="track && track.singer && track.singer.length">
+                    <Avatar
+                      :image="track.singer[0].image"
+                      size="52"
+                      radius="7.5"
+                    />
+                  </div>
                 </div>
                 <div class="info">
                   <div class="title">{{ track.title }}</div>
@@ -82,11 +82,13 @@
           <div v-if="isFull" class="inner">
             <div class="row">
               <div class="avatar">
-                <img
-                  v-if="track && track.singer && track.singer.length"
-                  class="img"
-                  :src="`https://files.radio-golha.com${track.singer[0].image}`"
-                />
+                <div v-if="track && track.singer && track.singer.length">
+                  <Avatar
+                    :image="track.singer[0].image"
+                    size="100"
+                    radius="7.5"
+                  />
+                </div>
               </div>
               <div class="info">
                 <div class="title">{{ track.title }}</div>
@@ -196,12 +198,11 @@
         display: flex;
         flex-direction: row-reverse;
         .avatar {
-          .img {
-            width: 52px;
-            height: 52px;
-            object-fit: cover;
-            filter: grayscale(100%);
-            border-radius: 7.5px;
+          .avatar-no-img {
+            background-color: #6f6f6f;
+            i {
+              font-size: 2rem;
+            }
           }
         }
         .info {
@@ -241,12 +242,11 @@
       display: flex;
       flex-direction: row-reverse;
       .avatar {
-        .img {
-          width: 100px;
-          height: 100px;
-          object-fit: cover;
-          filter: grayscale(100%);
-          border-radius: 7.5px;
+        .avatar-no-img {
+          background-color: #6f6f6f;
+          i {
+            font-size: 3rem;
+          }
         }
       }
       .info {
