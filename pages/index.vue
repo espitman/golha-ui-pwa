@@ -3,7 +3,7 @@
     <f7-navbar>
       <Navbar />
     </f7-navbar>
-    <FullPageLoader v-if="loading" loading="loading" />
+    <SkeletonIndex v-if="loading" />
     <div v-if="!loading">
       <ProgramsScroller :programs="programs" />
       <SingersScroller :singers="singers" />
