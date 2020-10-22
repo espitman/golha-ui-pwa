@@ -341,7 +341,6 @@ export default {
       this.fastBackward();
     });
     this.$nuxt.$on("player::hide", () => {
-      console.log("player::hide", this.$nuxt.$route.path);
       this.isVisible = false;
     });
     this.$nuxt.$on("player::show", () => {

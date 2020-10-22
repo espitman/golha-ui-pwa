@@ -1,5 +1,5 @@
 <template>
-  <f7-page id="person-page">
+  <f7-page id="person-page" @page:init="pageInit" @page:reinit="pageInit">
     <f7-navbar id="person-page-navbar" :class="{ transparent }">
       <f7-nav-right>
         <img
@@ -90,8 +90,10 @@
 </style>
 
 <script>
+import page from "../../../mixins/page";
 export default {
   props: ["_id", "name"],
+  mixins: [page],
   data() {
     return { loading: true, tracks: [], info: {}, transparent: true };
   },

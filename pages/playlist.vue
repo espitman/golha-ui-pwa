@@ -1,5 +1,5 @@
 <template>
-  <f7-page>
+  <f7-page @page:init="pageInit" @page:reinit="pageInit">
     <f7-navbar>
       <InnerNavbar title="لیست پخش" />
     </f7-navbar>
@@ -15,7 +15,9 @@
 </template>
 
 <script>
+import page from "../mixins/page";
 export default {
+  mixins: [page],
   data() {
     return { tracks: [] };
   },

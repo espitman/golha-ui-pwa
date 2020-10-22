@@ -1,10 +1,5 @@
 <template>
-  <f7-page
-    id="player-page"
-    @page:init="pageInit"
-    @page:reinit="pageInit"
-    @page:beforeout="beforeout"
-  >
+  <f7-page id="player-page" @page:init="pageInit" @page:reinit="pageInit">
     <f7-navbar id="player-page-navbar" class="transparent">
       <f7-nav-right></f7-nav-right>
       <f7-nav-title></f7-nav-title>
@@ -155,7 +150,9 @@
 </style>
 
 <script>
+import page from "../mixins/page";
 export default {
+  mixins: [page],
   data() {
     return {
       track: this.$store.state.golha.currentTrack,
@@ -169,12 +166,6 @@ export default {
     });
   },
   methods: {
-    pageInit() {
-      this.$nuxt.$emit("player::hide");
-    },
-    beforeout() {
-      this.$nuxt.$emit("player::show");
-    },
     play() {
       const track = this.$store.state.golha.currentTrack;
       if (this.$store.state.golha.currentTrack._id !== track._id) {

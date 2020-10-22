@@ -22,7 +22,10 @@ module.exports = {
   framework7: {
     app: {
       view: {
-        stackPages: true
+        stackPages: true,
+        routeChange: function () {
+          console.log('AAA')
+        }
       }
     }
   },
