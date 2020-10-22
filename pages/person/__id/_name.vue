@@ -2,17 +2,14 @@
   <f7-page id="person-page" @page:init="pageInit" @page:reinit="pageInit">
     <f7-navbar id="person-page-navbar" :class="{ transparent }">
       <f7-nav-right>
-        <img
-          class="avatar"
-          :src="`https://files.radio-golha.com${info.image}`"
-        />
+        <Avatar :image="info.image" radius="0" />
       </f7-nav-right>
       <f7-nav-title>{{ name }}</f7-nav-title>
       <f7-nav-left back-link=""> </f7-nav-left>
     </f7-navbar>
     <SkeletonPerson v-if="loading" />
     <div class="person" v-if="!loading">
-      <img class="img" :src="`https://files.radio-golha.com${info.image}`" />
+      <Avatar :image="info.image" radius="0" />
     </div>
     <div class="main" v-if="!loading">
       <TrackRow
@@ -30,14 +27,15 @@
   .title {
     margin-right: 64px;
   }
-  .avatar {
+  .avatar-img {
     width: 48px;
     height: 48px;
     margin-right: 8px;
     display: block;
-    object-fit: cover;
-    filter: grayscale(100%);
     transition: height 0.5s ease;
+    i {
+     font-size: 3rem;
+    }
   }
   .left {
     position: absolute;
@@ -54,7 +52,7 @@
     .icon {
       color: #fff;
     }
-    .avatar {
+    .avatar-img {
       display: none;
     }
   }
@@ -78,12 +76,16 @@
     text-align: center;
     position: relative;
     top: -56px;
-    .img {
+    .avatar-img {
       width: 100%;
       height: auto;
-      object-fit: cover;
-      filter: grayscale(100%);
-      transition: height 0.5s ease;
+      &.avatar-no-img {
+        padding-bottom: 100%;
+        i {
+          position: absolute;
+          top: 40%;
+        }
+      }
     }
   }
 }
@@ -109,7 +111,7 @@ export default {
   },
   methods: {
     eventScroll() {
-      const elm = document.getElementsByClassName("img")[0];
+      const elm = document.getElementsByClassName("avatar-img")[1];
       const w = elm.clientWidth;
       document
         .getElementById("person-page")
@@ -127,8 +129,5 @@ export default {
       }
     }
   }
-  // destroyed() {
-  //   document.removeEventListener("scroll", () => this.handleScroll(w));
-  // }
 };
 </script>

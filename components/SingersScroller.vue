@@ -5,13 +5,7 @@
       <ul class="singers">
         <li v-for="s in singers" :key="s.name">
           <f7-link :href="`/person/${s._id}/${s.name}`" class="singer-box">
-            <img
-              v-if="s.image"
-              :src="`https://files.radio-golha.com${s.image}`"
-            />
-            <div v-if="!s.image" class="no-img">
-              <f7-icon f7="mic"></f7-icon>
-            </div>
+            <Avatar :image="s.image" size="160" radius="7.5" />
             <h5>{{ s.name }}</h5>
           </f7-link>
         </li>
@@ -49,25 +43,7 @@
         background-size: cover;
         background-position: 100%;
         position: relative;
-        img {
-          width: 160px;
-          height: 160px;
-          object-fit: cover;
-          filter: grayscale(100%);
-          border-radius: 7.5px;
-        }
-        .no-img {
-          width: 160px;
-          height: 160px;
-          border-radius: 7.5px;
-          background: rgba(0, 0, 0, 0.1);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          i {
-            font-size: 7rem;
-          }
-        }
+
         h5 {
           color: black;
           margin: 10px 0;

@@ -4,10 +4,7 @@
     :class="{ current: $store.state.golha.currentTrack._id === track._id }"
   >
     <div class="inner">
-      <img
-        class="img"
-        :src="`https://files.radio-golha.com${track.singer[0].image}`"
-      />
+      <Avatar :image="track.singer[0].image" size="64" radius="7.5" />
       <div>
         <h4>{{ track.title }}</h4>
         <Singers :singers="track.singer" color="#000" :reverse="false" />
@@ -49,13 +46,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    .img {
-      width: 64px;
-      height: 64px;
-      object-fit: cover;
-      filter: grayscale(100%);
-      border-radius: 7.5px;
+    .avatar-img {
       margin-left: 15px;
+      i {
+        font-size: 3rem;
+      }
     }
     h4 {
       margin: 0;
