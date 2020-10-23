@@ -183,7 +183,7 @@
       top: -10px;
       .range-slider {
         width: 100%;
-        padding: unset;
+        padding: 0 !important;
         font-size: 0;
       }
       .range-slider-knob {
