@@ -1,6 +1,11 @@
 <template>
   <div class="singers" :class="{ reverse, center }">
-    <span :style="{ color }">{{ current.name }}</span>
+    <span v-if="singers.length > 2" :style="{ color }">{{ current.name }}</span>
+    <div v-else>
+      <span :style="{ color }" v-for="s in singers" :key="s.id">
+        {{ s.name }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -8,6 +13,7 @@
 .singers {
   display: flex;
   flex-direction: row;
+  white-space: nowrap;
   &.reverse {
     flex-direction: row-reverse;
   }
@@ -23,7 +29,8 @@
     font-size: 0.75rem;
     &::after {
       content: "،";
-      padding-left: 5px;
+      padding-left: 3px;
+      white-space: nowrap;
     }
     &:last-child {
       &::after {
@@ -63,7 +70,8 @@ export default {
     setCurrent() {
       if (this.singers.length > 1) {
         const self = this;
-        setInterval(function() {
+        clearInterval(this.interval);
+        this.interval = setInterval(function() {
           self.index =
             self.index + 1 < self.singers.length ? self.index + 1 : 0;
           self.current = self.singers[self.index];

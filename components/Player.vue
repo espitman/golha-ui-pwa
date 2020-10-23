@@ -211,7 +211,7 @@
       width: 100%;
       margin-top: 15px;
       .left {
-        width: 50%;
+        width: 60%;
         display: flex;
         flex-direction: row-reverse;
         .avatar {
