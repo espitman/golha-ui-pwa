@@ -181,10 +181,12 @@
       position: absolute;
       left: 0;
       top: -10px !important;
+      height: 20px !important;
       .range-slider {
         width: 100%;
         padding: 0 !important;
         font-size: 0;
+        display: block !important;
       }
       .range-slider-knob {
         display: none;
