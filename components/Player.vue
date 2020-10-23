@@ -25,15 +25,14 @@
         <div class="sheet-modal-swipe-step player">
           <div class="player_bottom" v-if="!isFull">
             <a class="range" v-if="isLoad">
-              <f7-range
-                :min="0"
+              <RangeSlider
+                min="0"
                 :max="track.duration"
-                :step="1"
-                :value="currentTime"
-                :label="false"
-                color="orange"
-                @range:change="goToTime"
-              ></f7-range>
+                step="1"
+                v-model="currentTime"
+                @change="goToTime"
+              >
+              </RangeSlider>
             </a>
             <div class="row" v-if="isLoad">
               <div class="left">
@@ -120,17 +119,16 @@
               </div>
             </div>
             <div class="row">
-              <a class="range" v-if="isLoad">
-                <f7-range
-                  :min="0"
+              <div class="range" v-if="isLoad">
+                <RangeSlider
+                  min="0"
                   :max="track.duration"
-                  :step="1"
-                  :value="currentTime"
-                  :label="false"
-                  color="orange"
-                  @range:change="goToTime"
-                ></f7-range>
-              </a>
+                  step="1"
+                  v-model="currentTime"
+                  @change="goToTime"
+                >
+                </RangeSlider>
+              </div>
             </div>
             <div class="row">
               <div class="controller">
@@ -183,7 +181,12 @@
       position: absolute;
       left: 0;
       top: -10px;
-      .range-knob {
+      .range-slider {
+        width: 100%;
+        padding: unset;
+        font-size: 0;
+      }
+      .range-slider-knob {
         display: none;
       }
     }
@@ -279,9 +282,11 @@
       }
       .range {
         width: 100%;
-        padding: 10px 0;
-        .range-knob {
-          display: none;
+        padding: 10px;
+        .range-slider {
+          width: 100%;
+          padding: unset;
+          font-size: 0;
         }
       }
       .controller {
@@ -302,6 +307,7 @@
 </style>
 
 <script>
+import RangeSlider from "vue-range-slider";
 export default {
   data() {
     return {
@@ -315,6 +321,9 @@ export default {
       currentTime: 0,
       pHeight: 75
     };
+  },
+  components: {
+    RangeSlider
   },
   mounted: function() {
     this.$nuxt.$on("track::play", track => {
@@ -393,8 +402,8 @@ export default {
       };
     },
     goToTime(value) {
-      if (Math.abs(value - this.currentTime) > 5) {
-        this.player.currentTime = this.track.duration - value;
+      if (Math.abs(value - this.player.currentTime) > 5) {
+        this.player.currentTime = value;
       }
     },
     fastBackward() {

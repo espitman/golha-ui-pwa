@@ -33,15 +33,15 @@
       :center="false"
     />
     <div class="range">
-      <f7-range
-        :min="0"
+      <RangeSlider
+        class="slider"
+        min="0"
         :max="$store.state.golha.currentTrack.duration"
-        :step="1"
-        :value="currentTime"
-        :label="false"
-        color="orange"
-        @range:change="goToTime"
-      ></f7-range>
+        step="1"
+        v-model="currentTime"
+        @change="goToTime"
+      >
+      </RangeSlider>
       <div class="text">
         <div class="left">{{ mmss(currentTime) }}</div>
         <div class="right">
@@ -132,11 +132,14 @@
     }
   }
   .range {
-    width: 90%;
-    margin: 32px 5% 16px 5%;
+    width: 100%;
     direction: ltr;
-    .range-knob {
-      display: none;
+    width: 90%;
+    margin: 10px 5%;
+    .range-slider {
+      width: 100%;
+      padding: 0;
+      margin-bottom: 8px;
     }
     .text {
       display: flex;
@@ -155,6 +158,8 @@
 
 <script>
 import page from "../mixins/page";
+import RangeSlider from "vue-range-slider";
+
 export default {
   mixins: [page],
   data() {
@@ -162,6 +167,9 @@ export default {
       track: this.$store.state.golha.currentTrack,
       currentTime: 0
     };
+  },
+  components: {
+    RangeSlider
   },
   mounted() {
     this.player = document.getElementById("player");
