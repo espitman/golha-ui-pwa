@@ -180,7 +180,7 @@
       width: 100%;
       position: absolute;
       left: 0;
-      top: -10px;
+      top: -10px !important;
       .range-slider {
         width: 100%;
         padding: 0 !important;
