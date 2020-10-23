@@ -132,6 +132,12 @@
             </div>
             <div class="row">
               <div class="controller">
+                <f7-button
+                  v-on:click="next(track)"
+                  v-if="$store.state.golha.playList.length > 1"
+                >
+                  <f7-icon size="34" f7="forward_end" color="white"></f7-icon>
+                </f7-button>
                 <f7-button v-on:click="fastForward()">
                   <f7-icon size="28" f7="fastforward" color="white"></f7-icon>
                 </f7-button>
@@ -148,6 +154,12 @@
                     class="reverse"
                     color="white"
                   ></f7-icon>
+                </f7-button>
+                <f7-button
+                  v-on:click="previous(track)"
+                  v-if="$store.state.golha.playList.length > 1"
+                >
+                  <f7-icon size="34" f7="backward_end" color="white"></f7-icon>
                 </f7-button>
               </div>
             </div>
@@ -360,6 +372,12 @@ export default {
     this.$nuxt.$on("playList::play", track => {
       this.doPlay(track);
     });
+    this.$nuxt.$on("playList::previous", track => {
+      this.previous(track);
+    });
+    this.$nuxt.$on("playList::next", track => {
+      this.next(track);
+    });
     this.mediaSessionEventsHandler();
   },
   methods: {
@@ -413,6 +431,25 @@ export default {
     },
     fastForward() {
       this.player.currentTime += 10;
+    },
+    previous(track) {
+      let playList = this.$store.state.golha.playList || [];
+      const currentIndex = playList.findIndex(t => t._id === track._id);
+      const newTrack = playList[currentIndex - 1];
+      if (newTrack) {
+        this.doPlay(newTrack);
+      } else {
+        this.player.currentTime = 0;
+        this.pause();
+      }
+    },
+    next(track) {
+      let playList = this.$store.state.golha.playList || [];
+      const currentIndex = playList.findIndex(t => t._id === track._id);
+      const newTrack = playList[currentIndex + 1];
+      if (newTrack) {
+        this.doPlay(newTrack);
+      }
     },
     mmss(secs) {
       var secNum = parseInt(secs, 10);

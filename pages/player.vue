@@ -50,14 +50,20 @@
       </div>
     </div>
     <div class="controller">
+      <f7-button
+        v-on:click="next()"
+        v-if="$store.state.golha.playList.length > 1"
+      >
+        <f7-icon size="34" f7="forward_end" color="white"></f7-icon>
+      </f7-button>
       <f7-button v-on:click="fastForward()">
         <f7-icon size="34" f7="fastforward" color="white"></f7-icon>
       </f7-button>
       <f7-button v-if="$store.state.golha.isPlaying" v-on:click="pause()">
-        <f7-icon size="40" f7="pause" color="white"></f7-icon>
+        <f7-icon size="43" f7="pause" color="white"></f7-icon>
       </f7-button>
       <f7-button v-if="!$store.state.golha.isPlaying" v-on:click="play()">
-        <f7-icon size="40" f7="play" color="white"></f7-icon>
+        <f7-icon size="44" f7="play" color="white"></f7-icon>
       </f7-button>
       <f7-button v-on:click="fastBackward()">
         <f7-icon
@@ -66,6 +72,12 @@
           class="reverse"
           color="white"
         ></f7-icon>
+      </f7-button>
+      <f7-button
+        v-on:click="previous()"
+        v-if="$store.state.golha.playList.length > 1"
+      >
+        <f7-icon size="34" f7="backward_end" color="white"></f7-icon>
       </f7-button>
     </div>
   </f7-page>
@@ -199,6 +211,14 @@ export default {
     },
     fastBackward() {
       this.$nuxt.$emit("track::fastBackward");
+    },
+    previous() {
+      const track = this.$store.state.golha.currentTrack;
+      this.$nuxt.$emit("playList::previous", track);
+    },
+    next() {
+      const track = this.$store.state.golha.currentTrack;
+      this.$nuxt.$emit("playList::next", track);
     },
     mmss(secs) {
       var secNum = parseInt(secs, 10);

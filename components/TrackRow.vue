@@ -23,7 +23,7 @@
           <f7-icon size="28" f7="play" color="black"></f7-icon>
         </f7-button>
         <f7-button v-on:click="openActionSheet(track)">
-          <f7-icon size="28" f7="more_fill" color="black"></f7-icon>
+          <f7-icon size="28" f7="ellipsis" color="black"></f7-icon>
         </f7-button>
       </div>
     </div>
