@@ -1,5 +1,5 @@
 build:
   stage: build
-  script: ./build
+  script: ./build.sh
   only:
     - master
