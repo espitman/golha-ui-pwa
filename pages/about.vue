@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-navbar title="About Nuxt7" back-link="Back"></f7-navbar>
-    <f7-block-title>Welcome to Golha2</f7-block-title>
+    <f7-block-title>Welcome to Golha</f7-block-title>
     <f7-block strong>
       <p>
         Nuxt.js - is a framework for creating Universal Vue.js Applications.
