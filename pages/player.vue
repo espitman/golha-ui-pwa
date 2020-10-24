@@ -80,6 +80,9 @@
         <f7-icon size="34" f7="backward_end" color="white"></f7-icon>
       </f7-button>
     </div>
+    <div class="info-box">
+      <f7-button outline round :href="`/track/${this.$store.state.golha.currentTrack._id}`">مشخصات برنامه</f7-button>
+    </div>
   </f7-page>
 </template>
 
@@ -163,6 +166,17 @@
       .right {
         text-align: right;
       }
+    }
+  }
+  .info-box {
+    width: 90%;
+    margin: 0 5%;
+
+    position: absolute;
+    bottom: 30px;
+    a {
+      font-family: IranSansWeb;
+      font-weight: 300;
     }
   }
 }

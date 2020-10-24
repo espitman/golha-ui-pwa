@@ -68,6 +68,7 @@
         height: 200px;
         margin-left: 10px;
         border-radius: 7.5px;
+        overflow: hidden;
         .img {
           width: 160px;
           height: 160px;
