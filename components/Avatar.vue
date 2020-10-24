@@ -28,8 +28,8 @@
 .avatar-img {
   object-fit: cover;
   filter: grayscale(100%);
+  background: rgba(0, 0, 0, 0.1);
   &.avatar-no-img {
-    background: rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
