@@ -34,7 +34,7 @@
     display: block;
     transition: height 0.5s ease;
     i {
-     font-size: 3rem;
+      font-size: 3rem;
     }
   }
   .left {
@@ -111,8 +111,7 @@ export default {
   },
   methods: {
     eventScroll() {
-      const elm = document.getElementsByClassName("avatar-img")[1];
-      const w = elm.clientWidth;
+      const w = window.innerWidth;
       document
         .getElementById("person-page")
         .getElementsByClassName("page-content")[0]
