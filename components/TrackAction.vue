@@ -13,6 +13,11 @@
       <f7-actions-button v-on:click="addToPlayList()"
         >افزودن به لیست درحال پخش</f7-actions-button
       >
+      <f7-actions-button>
+        <a :href="`/track/${track._id}`">
+          مشخصات
+        </a>
+      </f7-actions-button>
       <f7-actions-button color="red">لغو</f7-actions-button>
     </f7-actions-group>
   </f7-actions>

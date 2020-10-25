@@ -1,40 +1,88 @@
 <template>
-  <f7-page>
-    <f7-navbar title="" backLink="Back"></f7-navbar>
+  <f7-page id="track-page" @page:init="pageInit" @page:reinit="pageInit">
+    <f7-navbar id="track-page-navbar" class="transparent">
+      <f7-nav-right></f7-nav-right>
+      <f7-nav-title></f7-nav-title>
+      <f7-nav-left back-link=""> </f7-nav-left>
+    </f7-navbar>
     <FullPageLoader v-if="loading" loading="loading" />
     <div class="main" v-if="!loading">
       <h1>{{ track.title }}</h1>
       <h2 v-if="track.subtitle">{{ track.subtitle }}</h2>
       <h3 v-if="track.dastgah">{{ track.dastgah }}</h3>
-      <div v-if="track.singer.length">
-        <h4>خواننده</h4>
-        <span v-for="s in track.singer" :key="s._id"> {{ s.name }}، </span>
-      </div>
-      <div v-if="track.composer.length">
-        <h4>آهنگساز</h4>
-        <span v-for="p in track.composer" :key="p._id"> {{ p.name }}، </span>
-      </div>
-      <div v-if="track.poet.length">
-        <h4>شاعر</h4>
-        <span v-for="p in track.poet" :key="p._id"> {{ p.name }}، </span>
-      </div>
-      <div v-if="track.narrator.length">
-        <h4>گوینده</h4>
-        <span v-for="p in track.narrator" :key="p._id"> {{ p.name }}، </span>
-      </div>
-      <div v-if="track.narrator.length">
-        <h4>نوازندگان</h4>
+      <TrackPerson
+        v-if="track.singer.length"
+        title="خواننده"
+        :persons="track.singer"
+      />
+      <TrackPerson
+        v-if="track.composer.length"
+        title="آهنگساز"
+        :persons="track.composer"
+      />
+      <TrackPerson
+        v-if="track.poet.length"
+        title="شاعر"
+        :persons="track.poet"
+      />
+      <TrackPerson
+        v-if="track.narrator.length"
+        title="گوینده"
+        :persons="track.narrator"
+      />
+
+      <div v-if="track.musicians.length">
         <span v-for="m in track.musicians" :key="m.instrument">
-          <h5>{{ m.instrument }}</h5>
-          <span v-for="p in m.persons" :key="p._id">{{ p.name }}، </span>
+          <TrackPerson
+            v-if="m.instrument != 'undefined' && m.persons.length"
+            :title="m.instrument"
+            :persons="m.persons"
+          />
         </span>
       </div>
     </div>
   </f7-page>
 </template>
 
+<style lang="scss">
+#track-page {
+  h1,
+  h2,
+  h3 {
+    text-align: center;
+    font-family: IranSansWeb;
+    font-weight: 400;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  h2 {
+    font-weight: 300;
+  }
+  h3 {
+    font-weight: 200;
+  }
+  #track-page-navbar {
+    .navbar-bg {
+      background: none;
+      &::before {
+        background: none;
+      }
+    }
+    .left {
+      position: absolute;
+      left: 0;
+    }
+    i {
+      color: #000;
+    }
+  }
+}
+</style>
+
 <script>
+import page from "../../mixins/page";
 export default {
+  mixins: [page],
   props: ["_id"],
   data() {
     return { loading: true };
