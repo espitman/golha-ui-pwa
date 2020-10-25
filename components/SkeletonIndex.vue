@@ -72,6 +72,7 @@
         .img {
           width: 160px;
           height: 160px;
+          border-radius: 7.5px;
         }
         .subtitle {
           margin: 15px 0;

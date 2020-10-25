@@ -1,5 +1,5 @@
 <template>
-  <div class="trackPerson" :class="persons.length <= 2 && 'half'">
+  <div class="trackPerson">
     <h4>{{ title }}</h4>
     <div class="trackPersonBox">
       <div class="personsBox">

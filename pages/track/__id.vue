@@ -46,6 +46,10 @@
 
 <style lang="scss">
 #track-page {
+  .main {
+    display: inline-block;
+    width: calc(100% - 30px);
+  }
   h1,
   h2,
   h3 {
