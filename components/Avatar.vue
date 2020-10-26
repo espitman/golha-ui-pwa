@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="avatar-box">
     <img
       v-if="this.image"
       class="avatar-img"

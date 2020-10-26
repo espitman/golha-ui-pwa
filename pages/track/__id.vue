@@ -5,41 +5,12 @@
       <f7-nav-title></f7-nav-title>
       <f7-nav-left back-link=""> </f7-nav-left>
     </f7-navbar>
-    <FullPageLoader v-if="loading" loading="loading" />
+    <SkeletonTrack v-if="loading"/>
     <div class="main" v-if="!loading">
       <h1>{{ track.title }}</h1>
       <h2 v-if="track.subtitle">{{ track.subtitle }}</h2>
       <h3 v-if="track.dastgah">{{ track.dastgah }}</h3>
-      <TrackPerson
-        v-if="track.singer.length"
-        title="خواننده"
-        :persons="track.singer"
-      />
-      <TrackPerson
-        v-if="track.composer.length"
-        title="آهنگساز"
-        :persons="track.composer"
-      />
-      <TrackPerson
-        v-if="track.poet.length"
-        title="شاعر"
-        :persons="track.poet"
-      />
-      <TrackPerson
-        v-if="track.narrator.length"
-        title="گوینده"
-        :persons="track.narrator"
-      />
-
-      <div v-if="track.musicians.length">
-        <span v-for="m in track.musicians" :key="m.instrument">
-          <TrackPerson
-            v-if="m.instrument != 'undefined' && m.persons.length"
-            :title="m.instrument"
-            :persons="m.persons"
-          />
-        </span>
-      </div>
+      <TrackPerson :track="track" />
     </div>
   </f7-page>
 </template>
@@ -97,7 +68,6 @@ export default {
     ];
     const response = await Promise.all(promises);
     this.track = response[0].data.payload;
-    console.log(this.track);
     this.loading = false;
   }
 };
