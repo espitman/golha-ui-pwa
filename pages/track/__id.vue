@@ -5,7 +5,7 @@
       <f7-nav-title></f7-nav-title>
       <f7-nav-left back-link=""> </f7-nav-left>
     </f7-navbar>
-    <SkeletonTrack v-if="loading"/>
+    <SkeletonTrack v-if="loading" />
     <div class="main" v-if="!loading">
       <h1>{{ track.title }}</h1>
       <h2 v-if="track.subtitle">{{ track.subtitle }}</h2>
@@ -64,7 +64,7 @@ export default {
   },
   async fetch() {
     const promises = [
-      this.$axios.get(`https://api.radio-golha.com/api/v1/track/${this._id}`)
+      this.$axios.get(`${process.env.api.baseUrl}/track/${this._id}`)
     ];
     const response = await Promise.all(promises);
     this.track = response[0].data.payload;

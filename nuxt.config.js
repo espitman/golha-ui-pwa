@@ -23,8 +23,8 @@ module.exports = {
     app: {
       view: {
         stackPages: true,
-        routeChange: function () {
-          console.log('AAA')
+        routeChange: function() {
+          console.log("AAA");
         }
       }
     }
@@ -44,5 +44,10 @@ module.exports = {
 
   plugins: [{ src: "~/plugins/vue2-hammer", ssr: false }],
   // Additional CSS configuration
-  css: ["assets/app.scss"]
+  css: ["assets/app.scss"],
+  env: {
+    api: {
+      baseUrl: "https://api.radio-golha.com/api/v1"
+    }
+  }
 };

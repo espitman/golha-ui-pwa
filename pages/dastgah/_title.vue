@@ -25,9 +25,7 @@ export default {
   },
   async fetch() {
     const promises = [
-      this.$axios.get(
-        `https://api.radio-golha.com/api/v1/dastgah/${this.title}`
-      )
+      this.$axios.get(`${process.env.api.baseUrl}/dastgah/${this.title}`)
     ];
     const response = await Promise.all(promises);
     this.tracks = response[0].data.payload.tracks;
