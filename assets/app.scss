@@ -51,3 +51,22 @@ body,
 .range-slider-fill {
   background-color: orange !important;
 }
+
+.dialog {
+  .dialog-inner {
+    .dialog-title {
+      font-family: IranSansWeb;
+      direction: rtl;
+      text-align: right;
+    }
+    .dialog-text {
+      font-family: IranSansWeb;
+      direction: rtl;
+      text-align: right;
+    }
+  }
+  .dialog-button {
+    font-family: IranSansWeb;
+    color: #000000;
+  }
+}

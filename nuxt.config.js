@@ -48,6 +48,9 @@ module.exports = {
   env: {
     api: {
       baseUrl: "https://api.radio-golha.com/api/v1"
+    },
+    usersity: {
+      baseUrl: "https://usersity.radio-golha.com/api/v1"
     }
   }
 };
