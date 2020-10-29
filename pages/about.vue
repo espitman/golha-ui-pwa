@@ -1,31 +1,56 @@
 <template>
-  <f7-page>
-    <f7-navbar title="About Nuxt7" back-link="Back"></f7-navbar>
-    <f7-block-title>Welcome to Golha2</f7-block-title>
-    <f7-block strong>
+  <f7-page id="about-page" @page:init="pageInit" @page:reinit="pageInit">
+    <f7-navbar>
+      <InnerNavbar title="رادیو گل‌ها" />
+    </f7-navbar>
+    <div class="main">
       <p>
-        Nuxt.js - is a framework for creating Universal Vue.js Applications.
-        Our goal is to create a framework flexible enough that you can use it as a main project base or in addition to your current project based on Node.js.
-        Nuxt.js presets all the configuration needed to make your development of a Vue.js Application more enjoyable.
+        گل‌ها یک برنامه موسیقی ایرانی بود که به مدت ۲۳ سال از ۱۳۳۵ تا
+        ۱۳۵۷ از رادیو ملی ایران پخش میشد. این مجموعه جمعاً شامل ۸۵۰ ساعت
+        مقدمه و شعرخوانی به همراه آواز بود، که در این
+        میان تکنوازیهایی نیز گنجانده شده بود.
+        گل‌ها به سبب تحولی که در موسیقی
+        ایرانی ایجاد کرد، و تأثیر عظیمی که بر نگرش ایرانیان نسبت به موسیقی
+        بر جا نهاد، یکی از بهترین و اصیلترین و ایرانیترین
+        برنامههای تاریخ رادیو شمرده میشود.
       </p>
       <p>
-        Framework7 - is a free and open source HTML mobile framework to develop hybrid mobile apps or web apps with iOS or Android (Material) native look and feel. It is also an indispensable prototyping apps tool to show working app prototype as soon as possible in case you need to. Framework7 is created by Vladimir Kharlampidi (iDangero.us).
+        برنامه گل‌ها در آغاز با نام گل‌های جاویدان به
+        ابتکار داوود پیرنیا در رادیو تهران آغاز شد. برنامههای
+        دیگری نیز به نامهای گل‌های رنگارنگ، یک شاخه
+        گل، برگ سبز، گل‌های صحرایی بعد از ۱۳۳۴ به این مجموعه
+        افزوده شد. در طول یازدهسال ریاست و نظارت پیرنیا بر تولید مجموعهٔ
+        گل‌ها ۵ دسته برنامه در این مجموعه تهیه شد: گل‌های جاویدان (۱۵۷
+        برنامه)؛ گل‌های رنگارنگ (۴۸۱ برنامه)؛ برگ سبز (۴۸۱ برنامه)؛ یک شاخه
+        گل (۴۶۵ برنامه)؛ و گل‌های صحرایی (۶۴ برنامه) هر یک از این
+        مجموعهها شامل آثار برگزیدهٔ شاعران کهن و معاصر زبان پارسی، و
+        دکلمهٔ شعر در آنها با موسیقی و اجرای آهنگ و تفسیر جامع و کامل
+        استادانِ فن همراه بود و دکلمه کنندگانِ بنام و وارد به فن دکلمهٔ اشعار در
+        آن حضور داشتند. همچنین موسیقی کهن و بومی ایرانی نیز در این
+        مجموعهها به چشم میخورد. پس از کنارهگیری پیرنیا از
+        فعالیت در رادیو در سال ۱۳۴۶ و چند سال بیثباتی، در سال ۱۳۵۱ برنامه
+        دیگری با نام گل‌های تازه با مدیریت هوشنگ
+        ابتهاج پخش شد.
       </p>
-      <p>
-        The main approach of the Framework7 is to give you an opportunity to create iOS and Android (Material) apps with HTML, CSS and JavaScript easily and clear. Framework7 is full of freedom. It doesn't limit your imagination or offer ways of any solutions somehow. Framework7 gives you freedom!
-      </p>
-      <p>
-        Framework7 is not compatible with all platforms. It is focused only on iOS and Android (Material) to bring the best experience and simplicity.
-      </p>
-      <p>
-        Nuxt7 is a Nuxt.js module which adds everything is needed to make a complete and fast PWA app using Framework7.
-      </p>
-    </f7-block>
+    </div>
   </f7-page>
 </template>
 
-<script>
-export default {
-
+<style lang="scss">
+#about-page {
+  p {
+    text-align: justify;
+    direction: rtl;
+    font-family: IranSansWeb;
+    font-weight: 200;
+    line-height: 2;
+  }
 }
+</style>
+
+<script>
+import page from "../mixins/page";
+export default {
+  mixins: [page]
+};
 </script>
